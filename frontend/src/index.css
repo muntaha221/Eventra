@@ -1,0 +1,240 @@
+:root {
+    --bg-primary: #0a0a0c;
+    --bg-secondary: #121216;
+    --bg-card: rgba(20, 20, 26, 0.7);
+    --bg-card-hover: rgba(28, 28, 36, 0.85);
+    --border-color: #23232c;
+    --border-glow: rgba(34, 197, 94, 0.3);
+    
+    --neon-green: #22c55e;
+    --neon-glow: 0 0 20px rgba(34, 197, 94, 0.35);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --danger: #ef4444;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* General Sans for body text — premium feel without the generic Inter look */
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+    /* Satoshi for headings — high contrast, editorial weight */
+    font-family: 'Satoshi', 'General Sans', sans-serif;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+}
+
+.glass-panel-hover {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel-hover:hover {
+    border-color: var(--neon-green);
+    box-shadow: var(--neon-glow);
+    transform: translateY(-2px);
+}
+
+/* Button & Badge Utility Styles */
+.btn-neon {
+    background: var(--neon-green);
+    color: #052e16;
+    font-weight: 700;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-neon:hover {
+    /* Subtle lift — not a neon blast */
+    background: #28de6a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(34, 197, 94, 0.25);
+}
+
+.btn-secondary {
+    background: #1c1c24;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-secondary:hover {
+    background: #252532;
+    border-color: #3b3b4f;
+    color: #ffffff;
+}
+
+.badge-neon {
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: var(--neon-green);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.badge-pro {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(168, 85, 247, 0.2));
+    border: 1px solid rgba(168, 85, 247, 0.4);
+    color: #c084fc;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    text-transform: uppercase;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.4s ease forwards;
+}
+
+/* Input focus glow */
+input:focus, select:focus, textarea:focus {
+    border-color: rgba(34, 197, 94, 0.45) !important;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.08);
+}
+
+/* Hero Typography & Layout */
+.hero-split-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1.1fr;
+    gap: 60px;
+    align-items: center;
+    text-align: left;
+}
+
+.font-editorial-serif {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+}
+
+.font-mono-tag {
+    font-family: 'Geist Mono', 'SF Mono', 'Roboto Mono', Menlo, monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #888892;
+}
+
+.font-heading-clash {
+    font-family: 'Clash Display', 'Satoshi', sans-serif;
+}
+
+@media (max-width: 1024px) {
+    .hero-split-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+    }
+}
+
+/* Footer responsive grid */
+@media (max-width: 900px) {
+    .footer-grid {
+        grid-template-columns: 1fr 1fr !important;
+    }
+}
+@media (max-width: 600px) {
+    .footer-grid {
+        grid-template-columns: 1fr !important;
+    }
+    .contact-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Dashboard Sidebar Responsive */
+.mobile-hamburger-btn {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .mobile-hamburger-btn {
+        display: block;
+    }
+    .desktop-only-btn {
+        display: none !important;
+    }
+    .desktop-sidebar {
+        display: none !important;
+    }
+    .mobile-sidebar-open {
+        display: flex !important;
+        position: fixed !important;
+        inset: 0 auto 0 0 !important;
+        z-index: 100 !important;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.8) !important;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #0a0a0c;
+}
+::-webkit-scrollbar-thumb {
+    background: #22222a;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #33333f;
+}

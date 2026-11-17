@@ -1,0 +1,61 @@
+const express = require("express");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, ".env") });
+
+const connectDB = require("./config/db");
+const authRoutes = require("./routes/auth.routes");
+const eventRoutes = require("./routes/event.routes");
+const ticketRoutes = require("./routes/ticket.routes");
+const bookingRoutes = require("./routes/booking.routes");
+const adminRoutes = require("./routes/admin.routes");
+const billingRoutes = require("./routes/billing.routes");
+const orgRoutes = require("./routes/org.routes");
+const feedbackRoutes = require("./routes/feedback.routes");
+const errorMiddleware = require("./middleware/error.middleware");
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.use(
+    cors({
+        origin: "http://localhost:5173",
+        credentials: true
+    })
+);
+
+// Mount billing webhook route with raw body parser BEFORE express.json()
+app.use("/api/billing/webhook", express.raw({ type: "application/json" }));
+
+app.use(express.json());
+app.use(cookieParser());
+
+app.get("/", (req, res) => {
+    res.json({ success: true, message: "Eventra API" });
+});
+
+app.use("/api/auth", authRoutes);
+app.use("/api/events", eventRoutes);
+app.use("/api/tickets", ticketRoutes);
+app.use("/api/bookings", bookingRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/billing", billingRoutes);
+app.use("/api/orgs", orgRoutes);
+app.use("/api/feedback", feedbackRoutes);
+
+// 404
+app.use((req, res) => {
+    res.status(404).json({ success: false, message: "Route not found" });
+});
+
+// Error handler
+app.use(errorMiddleware);
+
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log(`Eventra API running on port ${PORT}`);
+    });
+});
+
+module.exports = app;
