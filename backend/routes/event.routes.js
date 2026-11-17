@@ -92,11 +92,11 @@ router.put(
     }
 );
 
-// Organization: delete event (only ORG_OWNER can delete, strictly scoped to org)
+// Organization: delete event (ORG_OWNER or ORG_MEMBER, strictly scoped to org)
 router.delete(
     "/:id",
     authMiddleware,
-    authorize("ORG_OWNER"),
+    authorize("ORG_OWNER", "ORG_MEMBER"),
     attachTenant,
     async (req, res) => {
         try {

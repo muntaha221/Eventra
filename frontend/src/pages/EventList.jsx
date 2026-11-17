@@ -1,27 +1,44 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Calendar, MapPin } from "lucide-react";
 import api from "../api/axios";
 import Input from "../components/Input";
 import Button from "../components/Button";
 
 function EventList() {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const urlCategory = searchParams.get("category") || "";
+    const urlSearch = searchParams.get("search") || "";
+
     const [events, setEvents] = useState([]);
-    const [search, setSearch] = useState("");
-    const [category, setCategory] = useState("");
+    const [search, setSearch] = useState(urlSearch);
+    const [category, setCategory] = useState(urlCategory.toLowerCase() === "all" ? "" : urlCategory);
     const [page, setPage] = useState(1);
     const [pagination, setPagination] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
+    // Keep state in sync with URL searchParams
+    useEffect(() => {
+        const cat = searchParams.get("category") || "";
+        const q = searchParams.get("search") || "";
+        setCategory(cat.toLowerCase() === "all" ? "" : cat);
+        setSearch(q);
+        setPage(1);
+    }, [searchParams]);
+
     async function load() {
         setLoading(true);
         setError("");
         try {
+            const queryParams = { page, limit: 6 };
+            if (search.trim()) queryParams.search = search.trim();
+            if (category && category.toLowerCase() !== "all") queryParams.category = category;
+
             const res = await api.get("/events", {
-                params: { page, limit: 6, search, category }
+                params: queryParams
             });
-            setEvents(res.data.data);
+            setEvents(res.data.data || []);
             setPagination(res.data.pagination);
         } catch (err) {
             setError(err.response?.data?.message || "Failed to load events");
@@ -31,6 +48,30 @@ function EventList() {
     }
 
     useEffect(() => { load(); }, [page, search, category]);
+
+    const handleSearchChange = (val) => {
+        setSearch(val);
+        setPage(1);
+        const nextParams = new URLSearchParams(searchParams);
+        if (val.trim()) {
+            nextParams.set("search", val.trim());
+        } else {
+            nextParams.delete("search");
+        }
+        setSearchParams(nextParams);
+    };
+
+    const handleCategoryChange = (val) => {
+        setCategory(val);
+        setPage(1);
+        const nextParams = new URLSearchParams(searchParams);
+        if (val && val.toLowerCase() !== "all") {
+            nextParams.set("category", val);
+        } else {
+            nextParams.delete("category");
+        }
+        setSearchParams(nextParams);
+    };
 
     return (
         <div className="container">
@@ -63,12 +104,12 @@ function EventList() {
                     <Input
                         placeholder="Search events by title..."
                         value={search}
-                        onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+                        onChange={(e) => handleSearchChange(e.target.value)}
                     />
                 </div>
                 <select
                     value={category}
-                    onChange={(e) => { setCategory(e.target.value); setPage(1); }}
+                    onChange={(e) => handleCategoryChange(e.target.value)}
                     style={{
                         padding: "12px 14px",
                         border: "1.5px solid #262626",

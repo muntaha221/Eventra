@@ -55,11 +55,11 @@ router.put(
     }
 );
 
-// Organization: delete ticket (ORG_OWNER only)
+// Organization: delete ticket (ORG_OWNER or ORG_MEMBER)
 router.delete(
     "/:id",
     authMiddleware,
-    authorize("ORG_OWNER"),
+    authorize("ORG_OWNER", "ORG_MEMBER"),
     attachTenant,
     async (req, res) => {
         try {

@@ -57,8 +57,9 @@ async function getAllEvents(queryParams, organizationId = null) {
         filter.organization = organizationId;
     }
 
-    if (queryParams.category) {
-        filter.category = queryParams.category;
+    if (queryParams.category && queryParams.category.trim() && queryParams.category.toLowerCase() !== "all") {
+        const safeCat = escapeRegex(queryParams.category.trim());
+        filter.category = { $regex: new RegExp(`^${safeCat}$`, "i") };
     }
 
     if (queryParams.search) {

@@ -29,23 +29,29 @@ function Landing() {
     const pricingRef = useRef(null);
 
     const [searchQuery, setSearchQuery] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("All");
     const [liveEvents, setLiveEvents] = useState([]);
     const [loadingEvents, setLoadingEvents] = useState(true);
 
+    async function fetchEvents(cat = selectedCategory) {
+        setLoadingEvents(true);
+        try {
+            const params = { page: 1, limit: 6 };
+            if (cat && cat !== "All") {
+                params.category = cat;
+            }
+            const res = await api.get("/events", { params });
+            setLiveEvents(res.data.data || []);
+        } catch (err) {
+            setLiveEvents([]);
+        } finally {
+            setLoadingEvents(false);
+        }
+    }
+
     // Load real public events from backend
     useEffect(() => {
-        async function fetchEvents() {
-            try {
-                const res = await api.get("/events", { params: { page: 1, limit: 3 } });
-                setLiveEvents(res.data.data || []);
-            } catch (err) {
-                // If endpoint fails or empty, gracefully handle
-                setLiveEvents([]);
-            } finally {
-                setLoadingEvents(false);
-            }
-        }
-        fetchEvents();
+        fetchEvents("All");
     }, []);
 
     // GSAP animations on hero mount
@@ -126,11 +132,9 @@ function Landing() {
     }
 
     function handleCategoryClick(cat) {
-        if (cat === "All") {
-            navigate("/events");
-        } else {
-            navigate(`/events?category=${encodeURIComponent(cat)}`);
-        }
+        setSelectedCategory(cat);
+        fetchEvents(cat);
+        eventsRef.current?.scrollIntoView({ behavior: "smooth" });
     }
 
     function formatDate(dateStr) {
@@ -267,33 +271,42 @@ function Landing() {
                         }}
                     >
                         <span style={{ fontSize: "12.5px", color: "#64748b", marginRight: "4px" }}>Browse:</span>
-                        {QUICK_CATEGORIES.map((cat) => (
-                            <button
-                                key={cat}
-                                onClick={() => handleCategoryClick(cat)}
-                                style={{
-                                    background: "rgba(255, 255, 255, 0.03)",
-                                    border: "1px solid #23232c",
-                                    color: "#94a3b8",
-                                    padding: "6px 14px",
-                                    borderRadius: "20px",
-                                    fontSize: "12.5px",
-                                    cursor: "pointer",
-                                    transition: "all 0.15s ease",
-                                    fontFamily: "inherit"
-                                }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.borderColor = "#22c55e";
-                                    e.currentTarget.style.color = "#ffffff";
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.borderColor = "#23232c";
-                                    e.currentTarget.style.color = "#94a3b8";
-                                }}
-                            >
-                                {cat}
-                            </button>
-                        ))}
+                        {QUICK_CATEGORIES.map((cat) => {
+                            const isActive = selectedCategory === cat;
+                            return (
+                                <button
+                                    key={cat}
+                                    onClick={() => handleCategoryClick(cat)}
+                                    style={{
+                                        background: isActive ? "rgba(34, 197, 94, 0.15)" : "rgba(255, 255, 255, 0.03)",
+                                        border: isActive ? "1px solid #22c55e" : "1px solid #23232c",
+                                        color: isActive ? "#22c55e" : "#94a3b8",
+                                        boxShadow: isActive ? "0 0 12px rgba(34, 197, 94, 0.25)" : "none",
+                                        fontWeight: isActive ? "600" : "400",
+                                        padding: "6px 14px",
+                                        borderRadius: "20px",
+                                        fontSize: "12.5px",
+                                        cursor: "pointer",
+                                        transition: "all 0.15s ease",
+                                        fontFamily: "inherit"
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        if (!isActive) {
+                                            e.currentTarget.style.borderColor = "#22c55e";
+                                            e.currentTarget.style.color = "#ffffff";
+                                        }
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        if (!isActive) {
+                                            e.currentTarget.style.borderColor = "#23232c";
+                                            e.currentTarget.style.color = "#94a3b8";
+                                        }
+                                    }}
+                                >
+                                    {cat}
+                                </button>
+                            );
+                        })}
                     </div>
 
                     {/* Primary Actions */}
@@ -364,7 +377,7 @@ function Landing() {
                 <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "36px", flexWrap: "wrap", gap: "16px" }}>
                     <div>
                         <span className="font-mono-tag" style={{ color: "#22c55e", marginBottom: "8px", display: "inline-block" }}>
-                            Live Directory
+                            Live Directory {selectedCategory !== "All" && `• ${selectedCategory}`}
                         </span>
                         <h2
                             className="font-heading-clash"
@@ -375,16 +388,16 @@ function Landing() {
                                 color: "#f8fafc"
                             }}
                         >
-                            Featured Upcoming Events
+                            {selectedCategory === "All" ? "Featured Upcoming Events" : `${selectedCategory} Events`}
                         </h2>
                     </div>
 
                     <Link
-                        to="/events"
+                        to={selectedCategory === "All" ? "/events" : `/events?category=${encodeURIComponent(selectedCategory)}`}
                         className="btn-secondary"
                         style={{ padding: "8px 18px", fontSize: "13.5px" }}
                     >
-                        View All Events <ArrowRight size={14} />
+                        View All {selectedCategory !== "All" ? `${selectedCategory} ` : ""}Events <ArrowRight size={14} />
                     </Link>
                 </div>
 
@@ -404,14 +417,30 @@ function Landing() {
                     >
                         <Calendar size={36} color="#64748b" style={{ margin: "0 auto 14px" }} />
                         <h3 style={{ fontSize: "18px", color: "#f8fafc", marginBottom: "8px", fontWeight: "600" }}>
-                            No public events scheduled right now
+                            No {selectedCategory !== "All" ? `${selectedCategory} ` : ""}events scheduled right now
                         </h3>
                         <p style={{ color: "#64748b", fontSize: "14px", marginBottom: "20px" }}>
-                            Create your organization to be the first to publish tickets on Eventra.
+                            {selectedCategory !== "All"
+                                ? `No upcoming events found in "${selectedCategory}". Try choosing another category or explore all events.`
+                                : "Create your organization to be the first to publish tickets on Eventra."}
                         </p>
-                        <Link to="/register" className="btn-neon">
-                            Create an Organization
-                        </Link>
+                        <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+                            {selectedCategory !== "All" && (
+                                <button
+                                    onClick={() => handleCategoryClick("All")}
+                                    className="btn-secondary"
+                                    style={{ padding: "10px 20px", fontSize: "13.5px" }}
+                                >
+                                    Reset to All
+                                </button>
+                            )}
+                            <Link to="/events" className="btn-secondary" style={{ padding: "10px 20px", fontSize: "13.5px" }}>
+                                Browse All Events
+                            </Link>
+                            <Link to="/register" className="btn-neon" style={{ padding: "10px 20px", fontSize: "13.5px" }}>
+                                Create an Organization
+                            </Link>
+                        </div>
                     </div>
                 ) : (
                     <div
