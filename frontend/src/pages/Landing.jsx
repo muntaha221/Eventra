@@ -216,7 +216,7 @@ function Landing() {
 
                     {/* Interactive Hook: Live Search Bar */}
                     <form
-                        onSubmit={handleHeroSearch}
+                        onSubmit={handleSearchSubmit}
                         style={{
                             maxWidth: "600px",
                             margin: "0 auto 24px",
