@@ -238,3 +238,93 @@ input:focus, select:focus, textarea:focus {
 ::-webkit-scrollbar-thumb:hover {
     background: #33333f;
 }
+
+/* ── Hardware-Accelerated Ambient Aurora Animations ── */
+@keyframes auroraFloat1 {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+        transform: translate3d(50px, 30px, 0) scale(1.12);
+    }
+    100% {
+        transform: translate3d(-30px, -20px, 0) scale(0.95);
+    }
+}
+
+@keyframes auroraFloat2 {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+        transform: translate3d(-60px, 45px, 0) scale(1.18);
+    }
+    100% {
+        transform: translate3d(40px, -30px, 0) scale(0.92);
+    }
+}
+
+@keyframes auroraPulse {
+    0%, 100% {
+        opacity: 0.55;
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        opacity: 0.9;
+        transform: translateX(-50%) scale(1.15);
+    }
+}
+
+.ambient-aurora-orb-1 {
+    animation: auroraFloat1 18s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+.ambient-aurora-orb-2 {
+    animation: auroraFloat2 24s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+.ambient-aurora-orb-3 {
+    animation: auroraPulse 14s ease-in-out infinite;
+    will-change: transform, opacity;
+}
+
+/* ── High-Resolution Holographic Live Card Effects ── */
+@keyframes holographicBeam {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(280%);
+    }
+}
+
+@keyframes pulseDot {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.9;
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+        box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+    }
+}
+
+.holographic-beam-sweep {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 35%;
+    background: linear-gradient(180deg, transparent, rgba(34, 197, 94, 0.12), transparent);
+    animation: holographicBeam 4.5s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.pulse-beacon {
+    animation: pulseDot 2s ease-in-out infinite;
+}
+

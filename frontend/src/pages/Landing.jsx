@@ -12,9 +12,14 @@ import {
     CreditCard,
     Users,
     CheckCircle,
-    Ticket
+    Ticket,
+    QrCode,
+    Zap,
+    Activity,
+    Lock
 } from "lucide-react";
 import api from "../api/axios";
+import AnimatedBackground from "../components/AnimatedBackground";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -144,35 +149,25 @@ function Landing() {
     }
 
     return (
-        <div style={{ paddingBottom: "100px" }}>
+        <div style={{ paddingBottom: "100px", position: "relative" }}>
 
-            {/* ── Focused Hero Section ─────────────────────────────── */}
-            <section
-                ref={heroRef}
-                style={{
-                    position: "relative",
-                    padding: "100px 24px 80px",
-                    maxWidth: "940px",
-                    margin: "0 auto",
-                    textAlign: "center"
-                }}
-            >
-                {/* Subtle, soft ambient lighting behind the headline */}
-                <div
+            {/* ── Top Atmospheric Ambient Animated Hero Canvas ── */}
+            <div style={{ position: "relative", overflow: "hidden", minHeight: "860px" }}>
+                <AnimatedBackground />
+
+                {/* ── Focused Hero Section ─────────────────────────────── */}
+                <section
+                    ref={heroRef}
                     style={{
-                        position: "absolute",
-                        top: "35%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        width: "650px",
-                        height: "360px",
-                        background: "radial-gradient(circle, rgba(34, 197, 94, 0.08) 0%, rgba(168, 85, 247, 0.03) 45%, transparent 75%)",
-                        pointerEvents: "none",
-                        zIndex: 0
+                        position: "relative",
+                        padding: "100px 24px 60px",
+                        maxWidth: "980px",
+                        margin: "0 auto",
+                        textAlign: "center",
+                        zIndex: 2
                     }}
-                />
-
-                <div style={{ position: "relative", zIndex: 1 }}>
+                >
+                    <div style={{ position: "relative", zIndex: 1 }}>
                     {/* Minimal Category Tag */}
                     <p className="font-mono-tag" style={{ marginBottom: "22px" }}>
                         Platform / Multi-Tenant Event Management
@@ -362,8 +357,174 @@ function Landing() {
                             Role-Based Team Access
                         </span>
                     </div>
+
+                    {/* ── High-Resolution Animated Engine Showcase Card ── */}
+                    <div
+                        style={{
+                            maxWidth: "920px",
+                            margin: "44px auto 0",
+                            background: "rgba(18, 18, 24, 0.72)",
+                            backdropFilter: "blur(20px)",
+                            WebkitBackdropFilter: "blur(20px)",
+                            border: "1px solid rgba(34, 197, 94, 0.28)",
+                            borderRadius: "18px",
+                            padding: "24px 28px",
+                            boxShadow: "0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(34, 197, 94, 0.08)",
+                            textAlign: "left",
+                            position: "relative",
+                            overflow: "hidden"
+                        }}
+                    >
+                        {/* Sweeping holographic beam */}
+                        <div className="holographic-beam-sweep" />
+
+                        {/* Card Header: Live Telemetry */}
+                        <div
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                paddingBottom: "16px",
+                                borderBottom: "1px solid rgba(255, 255, 255, 0.06)",
+                                marginBottom: "20px",
+                                flexWrap: "wrap",
+                                gap: "10px"
+                            }}
+                        >
+                            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                                <span
+                                    className="pulse-beacon"
+                                    style={{
+                                        width: "8px",
+                                        height: "8px",
+                                        borderRadius: "50%",
+                                        background: "#22c55e",
+                                        display: "inline-block"
+                                    }}
+                                />
+                                <span style={{ fontSize: "12px", fontFamily: "monospace", color: "#22c55e", letterSpacing: "0.05em", fontWeight: "600" }}>
+                                    EVENTRA ENGINE • REAL-TIME RUNTIME
+                                </span>
+                            </div>
+                            <div style={{ display: "flex", alignItems: "center", gap: "16px", fontSize: "12px", color: "#64748b" }}>
+                                <span>Latency: <strong style={{ color: "#f8fafc" }}>42ms</strong></span>
+                                <span>Anti-Fraud: <strong style={{ color: "#22c55e" }}>ACTIVE</strong></span>
+                                <span>Gateway: <strong style={{ color: "#60a5fa" }}>STRIPE CONNECT</strong></span>
+                            </div>
+                        </div>
+
+                        {/* 3-Column Interactive Architecture Visualizer */}
+                        <div
+                            style={{
+                                display: "grid",
+                                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                                gap: "18px"
+                            }}
+                        >
+                            {/* Module 1: Live Hardware QR Scanner */}
+                            <div
+                                style={{
+                                    background: "rgba(255, 255, 255, 0.02)",
+                                    border: "1px solid rgba(255, 255, 255, 0.05)",
+                                    borderRadius: "12px",
+                                    padding: "16px"
+                                }}
+                            >
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
+                                    <span style={{ fontSize: "11px", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: "600" }}>
+                                        Gate Check-In
+                                    </span>
+                                    <QrCode size={16} color="#22c55e" />
+                                </div>
+                                <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "10px" }}>
+                                    <div
+                                        style={{
+                                            width: "48px",
+                                            height: "48px",
+                                            borderRadius: "8px",
+                                            background: "#0f172a",
+                                            border: "1px solid #334155",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            position: "relative"
+                                        }}
+                                    >
+                                        <QrCode size={28} color="#22c55e" />
+                                    </div>
+                                    <div>
+                                        <div style={{ fontSize: "13px", fontWeight: "600", color: "#f8fafc" }}>VIP Ticket Pass</div>
+                                        <div style={{ fontSize: "11px", color: "#22c55e", display: "flex", alignItems: "center", gap: "4px" }}>
+                                            <CheckCircle size={11} /> Verified • Admitted
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style={{ fontSize: "10.5px", fontFamily: "monospace", color: "#475569", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                    UUID-7c9e-4b2a-88f1-ok
+                                </div>
+                            </div>
+
+                            {/* Module 2: Multi-Tenant Capacity Matrix */}
+                            <div
+                                style={{
+                                    background: "rgba(255, 255, 255, 0.02)",
+                                    border: "1px solid rgba(255, 255, 255, 0.05)",
+                                    borderRadius: "12px",
+                                    padding: "16px"
+                                }}
+                            >
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
+                                    <span style={{ fontSize: "11px", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: "600" }}>
+                                        Live Capacity
+                                    </span>
+                                    <Activity size={16} color="#60a5fa" />
+                                </div>
+                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "8px" }}>
+                                    <span style={{ fontSize: "20px", fontWeight: "700", color: "#f8fafc" }}>88% Sold</span>
+                                    <span style={{ fontSize: "12px", color: "#94a3b8" }}>352 / 400</span>
+                                </div>
+                                {/* Progress Bar */}
+                                <div style={{ width: "100%", height: "6px", background: "#1e293b", borderRadius: "3px", overflow: "hidden", marginBottom: "8px" }}>
+                                    <div style={{ width: "88%", height: "100%", background: "linear-gradient(90deg, #22c55e, #10b981)", borderRadius: "3px" }} />
+                                </div>
+                                <div style={{ fontSize: "11px", color: "#64748b", display: "flex", justifyContent: "space-between" }}>
+                                    <span>Early Bird (Sold Out)</span>
+                                    <span style={{ color: "#22c55e" }}>+$80 Revenue</span>
+                                </div>
+                            </div>
+
+                            {/* Module 3: Dual Checkout & Settlement */}
+                            <div
+                                style={{
+                                    background: "rgba(255, 255, 255, 0.02)",
+                                    border: "1px solid rgba(255, 255, 255, 0.05)",
+                                    borderRadius: "12px",
+                                    padding: "16px"
+                                }}
+                            >
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
+                                    <span style={{ fontSize: "11px", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: "600" }}>
+                                        Dual Settlement
+                                    </span>
+                                    <Zap size={16} color="#a855f7" />
+                                </div>
+                                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
+                                    <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#a855f7" }} />
+                                    <span style={{ fontSize: "12.5px", color: "#e2e8f0", fontWeight: "500" }}>Stripe Hosted Checkout</span>
+                                </div>
+                                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
+                                    <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#22c55e" }} />
+                                    <span style={{ fontSize: "12.5px", color: "#e2e8f0", fontWeight: "500" }}>Pay-at-Venue Flow</span>
+                                </div>
+                                <div style={{ fontSize: "11px", color: "#64748b", display: "flex", alignItems: "center", gap: "4px" }}>
+                                    <Lock size={11} color="#64748b" /> Atomic Inventory Locks
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
+        </div>
 
             {/* ── Real Live Public Events Showcase ──────────────────── */}
             <section
