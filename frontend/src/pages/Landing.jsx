@@ -216,18 +216,23 @@ function Landing() {
 
                     {/* Interactive Hook: Live Search Bar */}
                     <form
-                        onSubmit={handleSearchSubmit}
+                        onSubmit={handleHeroSearch}
                         style={{
                             maxWidth: "600px",
                             margin: "0 auto 24px",
                             display: "flex",
                             alignItems: "center",
-                            background: "#121217",
-                            border: "1px solid #23232c",
+                            background: "rgba(18, 18, 24, 0.42)",
+                            backdropFilter: "blur(16px)",
+                            WebkitBackdropFilter: "blur(16px)",
+                            border: "1px solid rgba(255, 255, 255, 0.1)",
                             borderRadius: "12px",
                             padding: "6px 8px 6px 16px",
-                            boxShadow: "0 12px 32px -8px rgba(0, 0, 0, 0.5)"
+                            boxShadow: "0 12px 32px -8px rgba(0, 0, 0, 0.5), 0 0 20px rgba(34, 197, 94, 0.06)",
+                            transition: "all 0.2s ease"
                         }}
+                        onFocus={(e) => { e.currentTarget.style.borderColor = "#22c55e"; e.currentTarget.style.boxShadow = "0 0 25px rgba(34, 197, 94, 0.2)"; }}
+                        onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)"; e.currentTarget.style.boxShadow = "0 12px 32px -8px rgba(0, 0, 0, 0.5), 0 0 20px rgba(34, 197, 94, 0.06)"; }}
                     >
                         <Search size={18} color="#64748b" style={{ flexShrink: 0, marginRight: "10px" }} />
                         <input
@@ -363,13 +368,13 @@ function Landing() {
                         style={{
                             maxWidth: "920px",
                             margin: "44px auto 0",
-                            background: "rgba(18, 18, 24, 0.72)",
-                            backdropFilter: "blur(20px)",
-                            WebkitBackdropFilter: "blur(20px)",
-                            border: "1px solid rgba(34, 197, 94, 0.28)",
+                            background: "rgba(14, 14, 20, 0.38)",
+                            backdropFilter: "blur(16px)",
+                            WebkitBackdropFilter: "blur(16px)",
+                            border: "1px solid rgba(34, 197, 94, 0.35)",
                             borderRadius: "18px",
                             padding: "24px 28px",
-                            boxShadow: "0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(34, 197, 94, 0.08)",
+                            boxShadow: "0 25px 60px rgba(0, 0, 0, 0.5), 0 0 35px rgba(34, 197, 94, 0.12)",
                             textAlign: "left",
                             position: "relative",
                             overflow: "hidden"
@@ -385,7 +390,7 @@ function Landing() {
                                 alignItems: "center",
                                 justifyContent: "space-between",
                                 paddingBottom: "16px",
-                                borderBottom: "1px solid rgba(255, 255, 255, 0.06)",
+                                borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
                                 marginBottom: "20px",
                                 flexWrap: "wrap",
                                 gap: "10px"
@@ -406,7 +411,7 @@ function Landing() {
                                     EVENTRA ENGINE • REAL-TIME RUNTIME
                                 </span>
                             </div>
-                            <div style={{ display: "flex", alignItems: "center", gap: "16px", fontSize: "12px", color: "#64748b" }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: "16px", fontSize: "12px", color: "#94a3b8" }}>
                                 <span>Latency: <strong style={{ color: "#f8fafc" }}>42ms</strong></span>
                                 <span>Anti-Fraud: <strong style={{ color: "#22c55e" }}>ACTIVE</strong></span>
                                 <span>Gateway: <strong style={{ color: "#60a5fa" }}>STRIPE CONNECT</strong></span>
@@ -424,14 +429,16 @@ function Landing() {
                             {/* Module 1: Live Hardware QR Scanner */}
                             <div
                                 style={{
-                                    background: "rgba(255, 255, 255, 0.02)",
-                                    border: "1px solid rgba(255, 255, 255, 0.05)",
+                                    background: "rgba(255, 255, 255, 0.035)",
+                                    backdropFilter: "blur(10px)",
+                                    WebkitBackdropFilter: "blur(10px)",
+                                    border: "1px solid rgba(255, 255, 255, 0.08)",
                                     borderRadius: "12px",
                                     padding: "16px"
                                 }}
                             >
                                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
-                                    <span style={{ fontSize: "11px", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: "600" }}>
+                                    <span style={{ fontSize: "11px", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: "600" }}>
                                         Gate Check-In
                                     </span>
                                     <QrCode size={16} color="#22c55e" />
@@ -442,8 +449,8 @@ function Landing() {
                                             width: "48px",
                                             height: "48px",
                                             borderRadius: "8px",
-                                            background: "#0f172a",
-                                            border: "1px solid #334155",
+                                            background: "rgba(15, 23, 42, 0.6)",
+                                            border: "1px solid rgba(51, 65, 85, 0.6)",
                                             display: "flex",
                                             alignItems: "center",
                                             justifyContent: "center",
@@ -459,7 +466,7 @@ function Landing() {
                                         </div>
                                     </div>
                                 </div>
-                                <div style={{ fontSize: "10.5px", fontFamily: "monospace", color: "#475569", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                <div style={{ fontSize: "10.5px", fontFamily: "monospace", color: "#64748b", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                                     UUID-7c9e-4b2a-88f1-ok
                                 </div>
                             </div>
@@ -467,14 +474,16 @@ function Landing() {
                             {/* Module 2: Multi-Tenant Capacity Matrix */}
                             <div
                                 style={{
-                                    background: "rgba(255, 255, 255, 0.02)",
-                                    border: "1px solid rgba(255, 255, 255, 0.05)",
+                                    background: "rgba(255, 255, 255, 0.035)",
+                                    backdropFilter: "blur(10px)",
+                                    WebkitBackdropFilter: "blur(10px)",
+                                    border: "1px solid rgba(255, 255, 255, 0.08)",
                                     borderRadius: "12px",
                                     padding: "16px"
                                 }}
                             >
                                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
-                                    <span style={{ fontSize: "11px", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: "600" }}>
+                                    <span style={{ fontSize: "11px", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: "600" }}>
                                         Live Capacity
                                     </span>
                                     <Activity size={16} color="#60a5fa" />
@@ -484,10 +493,10 @@ function Landing() {
                                     <span style={{ fontSize: "12px", color: "#94a3b8" }}>352 / 400</span>
                                 </div>
                                 {/* Progress Bar */}
-                                <div style={{ width: "100%", height: "6px", background: "#1e293b", borderRadius: "3px", overflow: "hidden", marginBottom: "8px" }}>
+                                <div style={{ width: "100%", height: "6px", background: "rgba(30, 41, 59, 0.7)", borderRadius: "3px", overflow: "hidden", marginBottom: "8px" }}>
                                     <div style={{ width: "88%", height: "100%", background: "linear-gradient(90deg, #22c55e, #10b981)", borderRadius: "3px" }} />
                                 </div>
-                                <div style={{ fontSize: "11px", color: "#64748b", display: "flex", justifyContent: "space-between" }}>
+                                <div style={{ fontSize: "11px", color: "#94a3b8", display: "flex", justifyContent: "space-between" }}>
                                     <span>Early Bird (Sold Out)</span>
                                     <span style={{ color: "#22c55e" }}>+$80 Revenue</span>
                                 </div>
@@ -496,14 +505,16 @@ function Landing() {
                             {/* Module 3: Dual Checkout & Settlement */}
                             <div
                                 style={{
-                                    background: "rgba(255, 255, 255, 0.02)",
-                                    border: "1px solid rgba(255, 255, 255, 0.05)",
+                                    background: "rgba(255, 255, 255, 0.035)",
+                                    backdropFilter: "blur(10px)",
+                                    WebkitBackdropFilter: "blur(10px)",
+                                    border: "1px solid rgba(255, 255, 255, 0.08)",
                                     borderRadius: "12px",
                                     padding: "16px"
                                 }}
                             >
                                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
-                                    <span style={{ fontSize: "11px", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: "600" }}>
+                                    <span style={{ fontSize: "11px", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: "600" }}>
                                         Dual Settlement
                                     </span>
                                     <Zap size={16} color="#a855f7" />
@@ -516,8 +527,8 @@ function Landing() {
                                     <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#22c55e" }} />
                                     <span style={{ fontSize: "12.5px", color: "#e2e8f0", fontWeight: "500" }}>Pay-at-Venue Flow</span>
                                 </div>
-                                <div style={{ fontSize: "11px", color: "#64748b", display: "flex", alignItems: "center", gap: "4px" }}>
-                                    <Lock size={11} color="#64748b" /> Atomic Inventory Locks
+                                <div style={{ fontSize: "11px", color: "#94a3b8", display: "flex", alignItems: "center", gap: "4px" }}>
+                                    <Lock size={11} color="#94a3b8" /> Atomic Inventory Locks
                                 </div>
                             </div>
                         </div>
