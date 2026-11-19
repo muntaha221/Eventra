@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require("uuid");
+const { randomUUID } = require("crypto");
 const qrcode = require("qrcode");
 const Booking = require("../models/booking.model");
 const Event = require("../models/event.model");
@@ -84,7 +84,7 @@ async function createBooking(userId, data) {
     }
 
     // Generate unique QR Code token and Base64 QR code image
-    const qrCodeToken = uuidv4();
+    const qrCodeToken = randomUUID();
     const qrCode = await qrcode.toDataURL(qrCodeToken, {
         width: 300,
         margin: 2,

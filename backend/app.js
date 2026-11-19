@@ -45,14 +45,20 @@ app.use(async (req, res, next) => {
     }
 });
 
-app.use("/api/auth", authRoutes);
-app.use("/api/events", eventRoutes);
-app.use("/api/tickets", ticketRoutes);
-app.use("/api/bookings", bookingRoutes);
-app.use("/api/admin", adminRoutes);
-app.use("/api/billing", billingRoutes);
-app.use("/api/orgs", orgRoutes);
-app.use("/api/feedback", feedbackRoutes);
+// Mount routes with both /api and root prefixes for seamless serverless & standalone compatibility
+const mountRoutes = (prefix) => {
+    app.use(`${prefix}/auth`, authRoutes);
+    app.use(`${prefix}/events`, eventRoutes);
+    app.use(`${prefix}/tickets`, ticketRoutes);
+    app.use(`${prefix}/bookings`, bookingRoutes);
+    app.use(`${prefix}/admin`, adminRoutes);
+    app.use(`${prefix}/billing`, billingRoutes);
+    app.use(`${prefix}/orgs`, orgRoutes);
+    app.use(`${prefix}/feedback`, feedbackRoutes);
+};
+
+mountRoutes("/api");
+mountRoutes("");
 
 // 404
 app.use((req, res) => {
