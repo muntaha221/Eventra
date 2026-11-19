@@ -9,6 +9,7 @@ node_modules/
 # Build output
 dist/
 build/
+.vercel/
 
 # IDE
 .vscode/
@@ -27,3 +28,5 @@ linkedin_assets/
 
 # Generator scripts (utility only)
 generate_*.js
+
+.vercel

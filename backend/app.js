@@ -35,6 +35,16 @@ app.get("/", (req, res) => {
     res.json({ success: true, message: "Eventra API" });
 });
 
+// Ensure database is connected (serverless & standalone)
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (err) {
+        res.status(500).json({ success: false, message: "Database connection failed" });
+    }
+});
+
 app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/tickets", ticketRoutes);
@@ -52,10 +62,14 @@ app.use((req, res) => {
 // Error handler
 app.use(errorMiddleware);
 
-connectDB().then(() => {
-    app.listen(PORT, () => {
-        console.log(`Eventra API running on port ${PORT}`);
+if (process.env.NODE_ENV !== "test" && !process.env.VERCEL) {
+    connectDB().then(() => {
+        app.listen(PORT, () => {
+            console.log(`Eventra API running on port ${PORT}`);
+        });
+    }).catch(err => {
+        console.error("Failed to start server:", err);
     });
-});
+}
 
 module.exports = app;
