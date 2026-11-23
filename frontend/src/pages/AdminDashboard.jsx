@@ -60,7 +60,7 @@ function AdminDashboard() {
     const [inviteSending, setInviteSending] = useState(false);
     const [inviteMessage, setInviteMessage] = useState("");
 
-    // Stripe checkout / portal loading
+    // Billing checkout / portal loading
     const [billingLoading, setBillingLoading] = useState(false);
 
     const user = JSON.parse(localStorage.getItem("user") || "null");
@@ -163,7 +163,7 @@ function AdminDashboard() {
         }
     }, [activeTab, loading]);
 
-    async function handleStripeCheckout() {
+    async function handleBillingCheckout() {
         setBillingLoading(true);
         try {
             const res = await api.post("/billing/checkout");
@@ -171,13 +171,13 @@ function AdminDashboard() {
                 window.location.href = res.data.data.url;
             }
         } catch (err) {
-            alert(err.response?.data?.message || "Failed to initialize Stripe checkout.");
+            alert(err.response?.data?.message || "Failed to initialize checkout.");
         } finally {
             setBillingLoading(false);
         }
     }
 
-    async function handleStripePortal() {
+    async function handleBillingPortal() {
         setBillingLoading(true);
         try {
             const res = await api.get("/billing/portal");
@@ -185,7 +185,7 @@ function AdminDashboard() {
                 window.location.href = res.data.data.url;
             }
         } catch (err) {
-            alert(err.response?.data?.message || "Failed to open Stripe portal.");
+            alert(err.response?.data?.message || "Failed to open billing portal.");
         } finally {
             setBillingLoading(false);
         }
@@ -1047,7 +1047,7 @@ function AdminDashboard() {
                                     Subscription & Billing
                                 </h2>
                                 <p style={{ color: "#64748b", fontSize: "14px", marginTop: "4px" }}>
-                                    Manage your organization's subscription tier and Stripe billing portal.
+                                    Manage your organization's subscription tier and billing portal.
                                 </p>
                             </div>
 
@@ -1070,16 +1070,16 @@ function AdminDashboard() {
 
                                     {isPro ? (
                                         <button
-                                            onClick={handleStripePortal}
+                                            onClick={handleBillingPortal}
                                             disabled={billingLoading}
                                             className="btn-secondary"
                                             style={{ width: "100%", justifyContent: "center" }}
                                         >
-                                            <ExternalLink size={15} /> {billingLoading ? "Opening..." : "Manage Stripe Customer Portal"}
+                                            <ExternalLink size={15} /> {billingLoading ? "Opening..." : "Manage Billing Portal"}
                                         </button>
                                     ) : (
                                         <button
-                                            onClick={handleStripeCheckout}
+                                            onClick={handleBillingCheckout}
                                             disabled={billingLoading}
                                             className="btn-neon"
                                             style={{ width: "100%", justifyContent: "center" }}
@@ -1116,7 +1116,7 @@ function AdminDashboard() {
 
                                     <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px", fontSize: "13.5px", color: "#94a3b8" }}>
                                         <li style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                                            <CheckCircle size={15} color="#22c55e" /> Stripe Instant Webhooks
+                                            <CheckCircle size={15} color="#22c55e" /> Instant Automated Webhooks
                                         </li>
                                         <li style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                                             <CheckCircle size={15} color="#22c55e" /> Automated Email Receipts

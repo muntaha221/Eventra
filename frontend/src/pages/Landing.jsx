@@ -203,19 +203,11 @@ function Landing() {
                         <span>Multi-Tenant Event Management & Ticketing</span>
                     </div>
 
-                    {/* Headline */}
-                    <h1
-                        style={{
-                            fontSize: "clamp(34px, 5.2vw, 60px)",
-                            fontWeight: "800",
-                            letterSpacing: "-0.03em",
-                            lineHeight: "1.12",
-                            marginBottom: "20px",
-                            color: "#f8fafc"
-                        }}
-                    >
-                        Run events that{" "}
-                        <span style={{ color: "#22c55e" }}>actually scale.</span>
+                    {/* Headline - High Impact 2 Words with Interactive Hover Glow & Shadow */}
+                    <h1>
+                        <span className="hero-glow-title">
+                            Own <span className="hero-glow-accent">Events.</span>
+                        </span>
                     </h1>
 
                     <p
@@ -368,7 +360,7 @@ function Landing() {
                     >
                         <span style={{ fontSize: "12.5px", color: "#64748b", display: "inline-flex", alignItems: "center", gap: "6px" }}>
                             <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#22c55e" }} />
-                            Automated Stripe Payouts
+                            Instant Revenue Settlements
                         </span>
                         <span style={{ fontSize: "12.5px", color: "#64748b", display: "inline-flex", alignItems: "center", gap: "6px" }}>
                             <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#a855f7" }} />
@@ -688,8 +680,8 @@ function Landing() {
                         {
                             icon: <CreditCard size={22} color="#c084fc" />,
                             iconBg: "rgba(168, 85, 247, 0.1)",
-                            title: "Automated Stripe Subscriptions",
-                            body: "Seamless checkout with instant webhooks that upgrade organizations to Pro. Includes a self-serve Customer Portal for invoices and payment method management."
+                            title: "Flexible Organization Billing",
+                            body: "Seamless organization upgrades to Pro for unlimited event capacity, team invitations, and advanced event management analytics."
                         },
                         {
                             icon: <Users size={22} color="#60a5fa" />,
@@ -810,7 +802,7 @@ function Landing() {
                                 "Unlimited Events",
                                 "Team Invites and Staff Roles",
                                 "Organization Analytics Hub",
-                                "Self-Serve Stripe Portal"
+                                "Self-Serve Billing Portal"
                             ].map((item) => (
                                 <li key={item} style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "14px", color: "#ffffff" }}>
                                     <CheckCircle size={16} color="#22c55e" /> {item}

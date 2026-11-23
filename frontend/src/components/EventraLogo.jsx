@@ -21,7 +21,7 @@ export default function EventraLogo({ height = 28, style = {}, className = "" })
             style={{ display: "inline-block", verticalAlign: "middle", overflow: "visible", ...style }}
             aria-label="Eventra"
         >
-            {/* Stylized Green 'E' (3-stripe speed wave mark) */}
+            {/* Stylized Green 'E' (Speed wave mark) */}
             <g fill="#22c55e" stroke="#22c55e" strokeWidth="1.2" strokeLinejoin="round">
                 {/* Top Bar */}
                 <path d="M 54,3 L 54,4 L 53,5 L 53,6 L 53,7 L 52,8 L 52,9 L 52,10 L 51,11 L 51,12 L 49,13 L 48,14 L 13,15 L 12,16 L 7,16 L 3,15 L 3,14 L 3,13 L 3,12 L 4,11 L 4,10 L 4,9 L 5,8 L 5,7 L 6,6 L 7,5 L 8,4 L 10,3 Z" />

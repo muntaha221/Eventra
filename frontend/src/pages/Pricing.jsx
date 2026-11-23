@@ -30,7 +30,7 @@ function Pricing() {
                 window.location.href = res.data.data.url;
             }
         } catch (err) {
-            setError(err.response?.data?.message || "Failed to initialize Stripe checkout.");
+            setError(err.response?.data?.message || "Failed to initialize checkout.");
         } finally {
             setLoading(false);
         }
@@ -194,7 +194,7 @@ function Pricing() {
                                 <CheckCircle size={17} color="#22c55e" /> Centralized organization dashboard
                             </li>
                             <li style={{ display: "flex", alignItems: "center", gap: "12px", fontSize: "14px", color: "#ffffff" }}>
-                                <CheckCircle size={17} color="#22c55e" /> Stripe Billing Customer Portal
+                                <CheckCircle size={17} color="#22c55e" /> Organization Billing Portal
                             </li>
                         </ul>
                     </div>
@@ -217,7 +217,7 @@ function Pricing() {
                             style={{ width: "100%" }}
                         >
                             <Zap size={16} />
-                            {loading ? "Redirecting to Stripe..." : "Upgrade with Stripe"}
+                            {loading ? "Redirecting to Checkout..." : "Upgrade to Pro"}
                         </button>
                     )}
                 </div>

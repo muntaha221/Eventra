@@ -265,7 +265,7 @@ function Footer() {
                                     Complete Multi-Tenant Event Infrastructure
                                 </h3>
                                 <p style={{ fontSize: "13.5px", color: "#94a3b8", margin: 0, maxWidth: "680px", lineHeight: "1.5" }}>
-                                    Engineered with enterprise-grade tenant isolation, real-time ticket inventory locking, automated Stripe webhooks, and instant QR check-in scanning.
+                                    Engineered with enterprise-grade tenant isolation, real-time ticket inventory locking, automated instant webhooks, and instant QR check-in scanning.
                                 </p>
                             </div>
                             <button
@@ -316,7 +316,7 @@ function Footer() {
                                         Integrations & APIs
                                     </h4>
                                     <ul style={{ margin: 0, paddingLeft: "18px", color: "#94a3b8", fontSize: "13px", lineHeight: "1.7" }}>
-                                        <li><strong style={{ color: "#e2e8f0" }}>Stripe Checkout:</strong> Automatic settlements & webhook sync.</li>
+                                        <li><strong style={{ color: "#e2e8f0" }}>Online Checkout:</strong> Automatic settlements & webhook sync.</li>
                                         <li><strong style={{ color: "#e2e8f0" }}>Automated Jobs:</strong> Nightly expired event auto-cleanup.</li>
                                         <li><strong style={{ color: "#e2e8f0" }}>GraphQL Endpoint:</strong> High-speed queries for modern clients.</li>
                                         <li><strong style={{ color: "#e2e8f0" }}>Cloudinary Storage:</strong> Optimized media and banner assets.</li>
