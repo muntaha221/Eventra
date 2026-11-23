@@ -19,6 +19,17 @@ function Navbar() {
     const location = useLocation();
     const authAreaRef = useRef(null);
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+
+    // Track scroll position to trigger transparent frosted ice glass transition
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 15);
+        };
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        handleScroll();
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     const token = localStorage.getItem("accessToken");
     const user = JSON.parse(localStorage.getItem("user") || "null");
@@ -88,17 +99,27 @@ function Navbar() {
                 position: "sticky",
                 top: 0,
                 zIndex: 100,
-                background: "rgba(10, 10, 12, 0.92)",
-                backdropFilter: "blur(16px)",
-                WebkitBackdropFilter: "blur(16px)",
-                borderBottom: "1px solid #1c1c24"
+                transition: "all 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
+                // Transparent frosted ice glass styling on scroll
+                background: scrolled
+                    ? "rgba(10, 10, 16, 0.52)"
+                    : "rgba(10, 10, 12, 0.82)",
+                backdropFilter: scrolled ? "blur(24px) saturate(190%)" : "blur(14px)",
+                WebkitBackdropFilter: scrolled ? "blur(24px) saturate(190%)" : "blur(14px)",
+                borderBottom: scrolled
+                    ? "1px solid rgba(255, 255, 255, 0.12)"
+                    : "1px solid rgba(255, 255, 255, 0.05)",
+                boxShadow: scrolled
+                    ? "0 16px 36px -8px rgba(0, 0, 0, 0.6), inset 0 1px 0 0 rgba(255, 255, 255, 0.16)"
+                    : "none"
             }}
         >
             <div
                 style={{
                     maxWidth: "1280px",
                     margin: "0 auto",
-                    padding: "12px 20px",
+                    padding: scrolled ? "10px 20px" : "14px 20px",
+                    transition: "padding 0.3s ease",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",

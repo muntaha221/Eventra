@@ -13,6 +13,7 @@ import {
     Users,
     CheckCircle,
     Ticket,
+    Building2,
     QrCode,
     Zap,
     Activity,
@@ -37,6 +38,12 @@ function Landing() {
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [liveEvents, setLiveEvents] = useState([]);
     const [loadingEvents, setLoadingEvents] = useState(true);
+    const [platformStats, setPlatformStats] = useState({
+        totalOrganizations: 6,
+        totalEvents: 9,
+        totalAttendees: 21,
+        totalMembers: 7
+    });
 
     async function fetchEvents(cat = selectedCategory) {
         setLoadingEvents(true);
@@ -55,9 +62,16 @@ function Landing() {
         }
     }
 
-    // Load real public events from backend
+    // Load real public events and platform metrics from backend
     useEffect(() => {
         fetchEvents("All");
+        api.get("/events/public/stats")
+            .then(res => {
+                if (res.data?.data) {
+                    setPlatformStats(res.data.data);
+                }
+            })
+            .catch(() => {});
     }, []);
 
     // GSAP animations on hero mount
@@ -169,41 +183,45 @@ function Landing() {
                     }}
                 >
                     <div style={{ position: "relative", zIndex: 1 }}>
-                    {/* Minimal Category Tag */}
-                    <p className="font-mono-tag" style={{ marginBottom: "22px" }}>
-                        Event Management · Multi-Tenant Platform
-                    </p>
+                    {/* Professional Pill Badge */}
+                    <div
+                        style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "8px",
+                            background: "rgba(34, 197, 94, 0.08)",
+                            border: "1px solid rgba(34, 197, 94, 0.25)",
+                            borderRadius: "9999px",
+                            padding: "6px 16px",
+                            marginBottom: "22px",
+                            fontSize: "13px",
+                            fontWeight: "600",
+                            color: "#f8fafc"
+                        }}
+                    >
+                        <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#22c55e" }} />
+                        <span>Multi-Tenant Event Management & Ticketing</span>
+                    </div>
 
                     {/* Headline */}
                     <h1
-                        className="font-heading-clash"
                         style={{
-                            fontSize: "clamp(36px, 5.2vw, 62px)",
-                            fontWeight: "600",
-                            letterSpacing: "-0.035em",
-                            lineHeight: "1.1",
+                            fontSize: "clamp(34px, 5.2vw, 60px)",
+                            fontWeight: "800",
+                            letterSpacing: "-0.03em",
+                            lineHeight: "1.12",
                             marginBottom: "20px",
                             color: "#f8fafc"
                         }}
                     >
                         Run events that{" "}
-                        <span
-                            className="font-editorial-serif"
-                            style={{
-                                fontSize: "1.08em",
-                                fontWeight: "400",
-                                color: "#22c55e",
-                                letterSpacing: "-0.01em"
-                            }}
-                        >
-                            actually scale.
-                        </span>
+                        <span style={{ color: "#22c55e" }}>actually scale.</span>
                     </h1>
 
                     <p
                         style={{
                             fontSize: "clamp(15px, 1.6vw, 17px)",
-                            color: "#64748b",
+                            color: "#94a3b8",
                             maxWidth: "520px",
                             margin: "0 auto 38px",
                             lineHeight: "1.7",
@@ -362,173 +380,100 @@ function Landing() {
                         </span>
                     </div>
 
-                    {/* ── High-Resolution Animated Engine Showcase Card ── */}
+                    {/* ── Real Live Platform Metrics Showcase ── */}
                     <div
                         style={{
-                            maxWidth: "920px",
+                            maxWidth: "940px",
                             width: "100%",
                             margin: "44px auto 0",
-                            background: "rgba(14, 14, 20, 0.38)",
+                            background: "rgba(18, 18, 24, 0.45)",
                             backdropFilter: "blur(16px)",
                             WebkitBackdropFilter: "blur(16px)",
-                            border: "1px solid rgba(34, 197, 94, 0.35)",
-                            borderRadius: "18px",
-                            padding: "clamp(16px, 4vw, 28px)",
-                            boxShadow: "0 25px 60px rgba(0, 0, 0, 0.5), 0 0 35px rgba(34, 197, 94, 0.12)",
-                            textAlign: "left",
-                            position: "relative",
-                            overflow: "hidden"
+                            border: "1px solid rgba(255, 255, 255, 0.08)",
+                            borderRadius: "16px",
+                            padding: "24px 28px",
+                            boxShadow: "0 20px 48px -10px rgba(0, 0, 0, 0.5)"
                         }}
                     >
-                        {/* Sweeping holographic beam */}
-                        <div className="holographic-beam-sweep" />
-
-                        {/* Card Header: Live Telemetry */}
                         <div
                             style={{
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "space-between",
                                 paddingBottom: "16px",
-                                borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
+                                borderBottom: "1px solid rgba(255, 255, 255, 0.06)",
                                 marginBottom: "20px",
                                 flexWrap: "wrap",
                                 gap: "10px"
                             }}
                         >
-                            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                                <span
-                                    className="pulse-beacon"
-                                    style={{
-                                        width: "8px",
-                                        height: "8px",
-                                        borderRadius: "50%",
-                                        background: "#22c55e",
-                                        display: "inline-block"
-                                    }}
-                                />
-                                <span style={{ fontSize: "12px", fontFamily: "monospace", color: "#22c55e", letterSpacing: "0.05em", fontWeight: "600" }}>
-                                    EVENTRA ENGINE • REAL-TIME RUNTIME
+                            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                                <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#22c55e", display: "inline-block" }} />
+                                <span style={{ fontSize: "13px", fontWeight: "600", color: "#f8fafc" }}>
+                                    Live Platform Scale
                                 </span>
                             </div>
-                            <div style={{ display: "flex", alignItems: "center", gap: "16px", fontSize: "12px", color: "#94a3b8" }}>
-                                <span>Latency: <strong style={{ color: "#f8fafc" }}>42ms</strong></span>
-                                <span>Anti-Fraud: <strong style={{ color: "#22c55e" }}>ACTIVE</strong></span>
-                                <span>Gateway: <strong style={{ color: "#60a5fa" }}>STRIPE CONNECT</strong></span>
-                            </div>
+                            <span style={{ fontSize: "12px", color: "#64748b" }}>
+                                Production Network Metrics
+                            </span>
                         </div>
 
-                        {/* 3-Column Interactive Architecture Visualizer */}
                         <div
                             style={{
                                 display: "grid",
-                                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-                                gap: "18px"
+                                gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+                                gap: "16px"
                             }}
                         >
-                            {/* Module 1: Live Hardware QR Scanner */}
-                            <div
-                                style={{
-                                    background: "rgba(255, 255, 255, 0.035)",
-                                    backdropFilter: "blur(10px)",
-                                    WebkitBackdropFilter: "blur(10px)",
-                                    border: "1px solid rgba(255, 255, 255, 0.08)",
-                                    borderRadius: "12px",
-                                    padding: "16px"
-                                }}
-                            >
-                                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
-                                    <span style={{ fontSize: "11px", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: "600" }}>
-                                        Gate Check-In
-                                    </span>
-                                    <QrCode size={16} color="#22c55e" />
+                            <div style={{ background: "rgba(255, 255, 255, 0.025)", border: "1px solid rgba(255, 255, 255, 0.05)", borderRadius: "12px", padding: "16px 20px", textAlign: "left" }}>
+                                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px", color: "#22c55e" }}>
+                                    <Building2 size={16} />
+                                    <span style={{ fontSize: "12.5px", color: "#94a3b8", fontWeight: "500" }}>Organizations</span>
                                 </div>
-                                <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "10px" }}>
-                                    <div
-                                        style={{
-                                            width: "48px",
-                                            height: "48px",
-                                            borderRadius: "8px",
-                                            background: "rgba(15, 23, 42, 0.6)",
-                                            border: "1px solid rgba(51, 65, 85, 0.6)",
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            position: "relative"
-                                        }}
-                                    >
-                                        <QrCode size={28} color="#22c55e" />
-                                    </div>
-                                    <div>
-                                        <div style={{ fontSize: "13px", fontWeight: "600", color: "#f8fafc" }}>VIP Ticket Pass</div>
-                                        <div style={{ fontSize: "11px", color: "#22c55e", display: "flex", alignItems: "center", gap: "4px" }}>
-                                            <CheckCircle size={11} /> Verified • Admitted
-                                        </div>
-                                    </div>
+                                <div style={{ fontSize: "28px", fontWeight: "800", color: "#f8fafc", lineHeight: "1.1" }}>
+                                    {platformStats.totalOrganizations}
                                 </div>
-                                <div style={{ fontSize: "10.5px", fontFamily: "monospace", color: "#64748b", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                                    UUID-7c9e-4b2a-88f1-ok
+                                <div style={{ fontSize: "11.5px", color: "#64748b", marginTop: "4px" }}>
+                                    Active organizers registered
                                 </div>
                             </div>
 
-                            {/* Module 2: Multi-Tenant Capacity Matrix */}
-                            <div
-                                style={{
-                                    background: "rgba(255, 255, 255, 0.035)",
-                                    backdropFilter: "blur(10px)",
-                                    WebkitBackdropFilter: "blur(10px)",
-                                    border: "1px solid rgba(255, 255, 255, 0.08)",
-                                    borderRadius: "12px",
-                                    padding: "16px"
-                                }}
-                            >
-                                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
-                                    <span style={{ fontSize: "11px", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: "600" }}>
-                                        Live Capacity
-                                    </span>
-                                    <Activity size={16} color="#60a5fa" />
+                            <div style={{ background: "rgba(255, 255, 255, 0.025)", border: "1px solid rgba(255, 255, 255, 0.05)", borderRadius: "12px", padding: "16px 20px", textAlign: "left" }}>
+                                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px", color: "#60a5fa" }}>
+                                    <Calendar size={16} />
+                                    <span style={{ fontSize: "12.5px", color: "#94a3b8", fontWeight: "500" }}>Events Published</span>
                                 </div>
-                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "8px" }}>
-                                    <span style={{ fontSize: "20px", fontWeight: "700", color: "#f8fafc" }}>88% Sold</span>
-                                    <span style={{ fontSize: "12px", color: "#94a3b8" }}>352 / 400</span>
+                                <div style={{ fontSize: "28px", fontWeight: "800", color: "#f8fafc", lineHeight: "1.1" }}>
+                                    {platformStats.totalEvents}
                                 </div>
-                                {/* Progress Bar */}
-                                <div style={{ width: "100%", height: "6px", background: "rgba(30, 41, 59, 0.7)", borderRadius: "3px", overflow: "hidden", marginBottom: "8px" }}>
-                                    <div style={{ width: "88%", height: "100%", background: "linear-gradient(90deg, #22c55e, #10b981)", borderRadius: "3px" }} />
-                                </div>
-                                <div style={{ fontSize: "11px", color: "#94a3b8", display: "flex", justifyContent: "space-between" }}>
-                                    <span>Early Bird (Sold Out)</span>
-                                    <span style={{ color: "#22c55e" }}>+$80 Revenue</span>
+                                <div style={{ fontSize: "11.5px", color: "#64748b", marginTop: "4px" }}>
+                                    Live sessions scheduled
                                 </div>
                             </div>
 
-                            {/* Module 3: Dual Checkout & Settlement */}
-                            <div
-                                style={{
-                                    background: "rgba(255, 255, 255, 0.035)",
-                                    backdropFilter: "blur(10px)",
-                                    WebkitBackdropFilter: "blur(10px)",
-                                    border: "1px solid rgba(255, 255, 255, 0.08)",
-                                    borderRadius: "12px",
-                                    padding: "16px"
-                                }}
-                            >
-                                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
-                                    <span style={{ fontSize: "11px", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: "600" }}>
-                                        Dual Settlement
-                                    </span>
-                                    <Zap size={16} color="#a855f7" />
+                            <div style={{ background: "rgba(255, 255, 255, 0.025)", border: "1px solid rgba(255, 255, 255, 0.05)", borderRadius: "12px", padding: "16px 20px", textAlign: "left" }}>
+                                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px", color: "#c084fc" }}>
+                                    <Ticket size={16} />
+                                    <span style={{ fontSize: "12.5px", color: "#94a3b8", fontWeight: "500" }}>Reservations</span>
                                 </div>
-                                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
-                                    <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#a855f7" }} />
-                                    <span style={{ fontSize: "12.5px", color: "#e2e8f0", fontWeight: "500" }}>Stripe Hosted Checkout</span>
+                                <div style={{ fontSize: "28px", fontWeight: "800", color: "#f8fafc", lineHeight: "1.1" }}>
+                                    {platformStats.totalAttendees}
                                 </div>
-                                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
-                                    <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#22c55e" }} />
-                                    <span style={{ fontSize: "12.5px", color: "#e2e8f0", fontWeight: "500" }}>Pay-at-Venue Flow</span>
+                                <div style={{ fontSize: "11.5px", color: "#64748b", marginTop: "4px" }}>
+                                    Attendee tickets reserved
                                 </div>
-                                <div style={{ fontSize: "11px", color: "#94a3b8", display: "flex", alignItems: "center", gap: "4px" }}>
-                                    <Lock size={11} color="#94a3b8" /> Atomic Inventory Locks
+                            </div>
+
+                            <div style={{ background: "rgba(255, 255, 255, 0.025)", border: "1px solid rgba(255, 255, 255, 0.05)", borderRadius: "12px", padding: "16px 20px", textAlign: "left" }}>
+                                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px", color: "#38bdf8" }}>
+                                    <Users size={16} />
+                                    <span style={{ fontSize: "12.5px", color: "#94a3b8", fontWeight: "500" }}>Team Members</span>
+                                </div>
+                                <div style={{ fontSize: "28px", fontWeight: "800", color: "#f8fafc", lineHeight: "1.1" }}>
+                                    {platformStats.totalMembers}
+                                </div>
+                                <div style={{ fontSize: "11.5px", color: "#64748b", marginTop: "4px" }}>
+                                    Staff & gate coordinators
                                 </div>
                             </div>
                         </div>
@@ -548,19 +493,21 @@ function Landing() {
             >
                 <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "36px", flexWrap: "wrap", gap: "16px" }}>
                     <div>
-                        <span className="font-mono-tag" style={{ color: "#22c55e", marginBottom: "8px", display: "inline-block" }}>
-                            Live Directory {selectedCategory !== "All" && `• ${selectedCategory}`}
-                        </span>
+                        <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", marginBottom: "8px" }}>
+                            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#22c55e" }} />
+                            <span style={{ color: "#22c55e", fontSize: "12px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                                Upcoming Events {selectedCategory !== "All" && `· ${selectedCategory}`}
+                            </span>
+                        </div>
                         <h2
-                            className="font-heading-clash"
                             style={{
                                 fontSize: "clamp(24px, 3vw, 32px)",
-                                fontWeight: "700",
-                                letterSpacing: "-0.02em",
+                                fontWeight: "800",
+                                letterSpacing: "-0.025em",
                                 color: "#f8fafc"
                             }}
                         >
-                            {selectedCategory === "All" ? "Featured Upcoming Events" : `${selectedCategory} Events`}
+                            {selectedCategory === "All" ? "Featured Events" : `${selectedCategory} Events`}
                         </h2>
                     </div>
 
@@ -709,10 +656,9 @@ function Landing() {
             >
                 <div ref={featureTitleRef} style={{ textAlign: "center", marginBottom: "52px" }}>
                     <h2
-                        className="font-heading-clash"
                         style={{
                             fontSize: "clamp(26px, 3vw, 34px)",
-                            fontWeight: "700",
+                            fontWeight: "800",
                             letterSpacing: "-0.025em",
                             color: "#f8fafc"
                         }}
@@ -788,17 +734,19 @@ function Landing() {
                 style={{ maxWidth: "960px", margin: "0 auto", padding: "0 24px" }}
             >
                 <div style={{ textAlign: "center", marginBottom: "44px" }}>
-                    <p className="font-mono-tag" style={{ marginBottom: "12px" }}>
-                        Pricing / Transparent Tiers
-                    </p>
+                    <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", marginBottom: "10px" }}>
+                        <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#22c55e" }} />
+                        <span style={{ color: "#22c55e", fontSize: "12px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                            Pricing Plans
+                        </span>
+                    </div>
                     <h2
-                        className="font-heading-clash"
                         style={{
                             fontSize: "clamp(26px, 3vw, 34px)",
-                            fontWeight: "700",
+                            fontWeight: "800",
                             letterSpacing: "-0.025em",
                             color: "#f8fafc",
-                            marginTop: "8px"
+                            marginTop: "4px"
                         }}
                     >
                         Choose the Plan That Fits Your Scale

@@ -255,9 +255,12 @@ function Footer() {
                     >
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px", marginBottom: showFullSpecs ? "20px" : "0" }}>
                             <div>
-                                <span className="font-mono-tag" style={{ color: "#22c55e", fontSize: "11px", marginBottom: "4px", display: "inline-block" }}>
-                                    PLATFORM ARCHITECTURE & CAPABILITIES
-                                </span>
+                                <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", marginBottom: "4px" }}>
+                                    <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#22c55e" }} />
+                                    <span style={{ color: "#22c55e", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                                        Platform Architecture & Capabilities
+                                    </span>
+                                </div>
                                 <h3 style={{ fontSize: "18px", fontWeight: "700", color: "#f8fafc", margin: "4px 0" }}>
                                     Complete Multi-Tenant Event Infrastructure
                                 </h3>

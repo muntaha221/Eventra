@@ -18,13 +18,11 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    /* General Sans for body text — premium feel without the generic Inter look */
-    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Helvetica Neue", Arial, sans-serif;
 }
 
 h1, h2, h3, h4, h5 {
-    /* Satoshi for headings — high contrast, editorial weight */
-    font-family: 'Satoshi', 'General Sans', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Helvetica Neue", Arial, sans-serif;
 }
 
 body {
@@ -161,21 +159,22 @@ input:focus, select:focus, textarea:focus {
 }
 
 .font-editorial-serif {
-    font-family: 'Instrument Serif', Georgia, serif;
-    font-style: italic;
-    font-weight: 400;
+    font-family: inherit;
+    font-weight: 700;
 }
 
 .font-mono-tag {
-    font-family: 'Geist Mono', 'SF Mono', 'Roboto Mono', Menlo, monospace;
-    font-size: 12.5px;
-    letter-spacing: 0.08em;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: #888892;
+    color: #22c55e;
 }
 
 .font-heading-clash {
-    font-family: 'Clash Display', 'Satoshi', sans-serif;
+    font-family: inherit;
+    font-weight: 700;
+    letter-spacing: -0.025em;
 }
 
 @media (max-width: 1024px) {
