@@ -13,6 +13,14 @@ const api = axios.create({
 let isRefreshing = false;
 let failedQueue = [];
 
+// High-speed client cache for instant repeat navigation
+const requestCache = new Map();
+const CACHE_TTL_MS = 60000; // 60 seconds
+
+export function clearApiCache() {
+    requestCache.clear();
+}
+
 const processQueue = (error, token = null) => {
     failedQueue.forEach((prom) => {
         if (error) {
@@ -24,18 +32,43 @@ const processQueue = (error, token = null) => {
     failedQueue = [];
 };
 
-// Request interceptor: attach Access Token
+// Request interceptor: attach Access Token + serve from client cache
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem("accessToken");
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
+
+    // Fast-path client cache for public GET endpoints (events, tickets)
+    if (config.method === "get" && !token) {
+        const cacheKey = `${config.url}?${JSON.stringify(config.params || {})}`;
+        const cached = requestCache.get(cacheKey);
+        if (cached && (Date.now() - cached.timestamp < CACHE_TTL_MS)) {
+            config.adapter = () => Promise.resolve({
+                data: cached.data,
+                status: 200,
+                statusText: "OK",
+                headers: {},
+                config
+            });
+        }
+    }
     return config;
 });
 
-// Response interceptor: handle 401 with silent /refresh
+// Response interceptor: populate cache & handle 401 with silent /refresh
 api.interceptors.response.use(
-    (response) => response,
+    (response) => {
+        // Cache successful public GET responses
+        if (response.config.method === "get" && !response.config.headers?.Authorization) {
+            const cacheKey = `${response.config.url}?${JSON.stringify(response.config.params || {})}`;
+            requestCache.set(cacheKey, {
+                data: response.data,
+                timestamp: Date.now()
+            });
+        }
+        return response;
+    },
     async (error) => {
         const originalRequest = error.config;
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 import api from "../api/axios";
 import { useToast } from "../components/Toast";
 import {
@@ -18,11 +18,15 @@ import {
 function EventDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
     const toast = useToast();
 
-    const [event, setEvent] = useState(null);
+    // Instant state hydration from navigation state for 0ms perceived latency
+    const initialEvent = location.state?.event || null;
+    const [event, setEvent] = useState(initialEvent);
     const [tickets, setTickets] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(!initialEvent);
+    const [loadingTickets, setLoadingTickets] = useState(true);
     const [error, setError] = useState("");
 
     const [selectedTicket, setSelectedTicket] = useState(null);
@@ -40,11 +44,16 @@ function EventDetails() {
     useEffect(() => {
         async function load() {
             try {
-                const [eventRes, ticketRes] = await Promise.all([
-                    api.get(`/events/${id}`),
-                    api.get(`/tickets/event/${id}`)
-                ]);
-                setEvent(eventRes.data.data);
+                const requests = [api.get(`/tickets/event/${id}`)];
+                // If event was not passed in router state, fetch it
+                if (!initialEvent) {
+                    requests.push(api.get(`/events/${id}`));
+                }
+
+                const [ticketRes, eventRes] = await Promise.all(requests);
+                if (eventRes) {
+                    setEvent(eventRes.data.data);
+                }
                 const tiers = ticketRes.data.data || [];
                 setTickets(tiers);
                 if (tiers.length > 0) {
@@ -52,9 +61,12 @@ function EventDetails() {
                     setSelectedTicket(firstAvail);
                 }
             } catch (err) {
-                setError("Failed to load event details");
+                if (!initialEvent) {
+                    setError("Failed to load event details");
+                }
             } finally {
                 setLoading(false);
+                setLoadingTickets(false);
             }
         }
         window.scrollTo(0, 0);
@@ -368,7 +380,12 @@ function EventDetails() {
                                     Select Ticket Tier
                                 </label>
 
-                                {tickets.length === 0 ? (
+                                {loadingTickets ? (
+                                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                                        <div style={{ height: "56px", background: "rgba(255,255,255,0.04)", borderRadius: "10px" }} className="skeleton-pulse" />
+                                        <div style={{ height: "56px", background: "rgba(255,255,255,0.04)", borderRadius: "10px" }} className="skeleton-pulse" />
+                                    </div>
+                                ) : tickets.length === 0 ? (
                                     <p style={{ color: "#64748b", fontSize: "13.5px" }}>No ticket tiers available for this event.</p>
                                 ) : (
                                     <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>

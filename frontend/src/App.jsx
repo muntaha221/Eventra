@@ -5,12 +5,12 @@ import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ScrollToTop from "./components/ScrollToTop";
 
-// Lazy‑load heavy pages for better performance
-const Landing = React.lazy(() => import('./pages/Landing'));
-const Pricing = React.lazy(() => import('./pages/Pricing'));
-const Contact = React.lazy(() => import('./pages/Contact'));
-const EventList = React.lazy(() => import('./pages/EventList'));
-const EventDetails = React.lazy(() => import('./pages/EventDetails'));
+// Fast direct imports for instant public attendee navigation (0ms route latency)
+import Landing from './pages/Landing';
+import Pricing from './pages/Pricing';
+import Contact from './pages/Contact';
+import EventList from './pages/EventList';
+import EventDetails from './pages/EventDetails';
 
 // Auth & onboarding (lightweight)
 import Login from "./pages/Login";

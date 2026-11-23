@@ -203,6 +203,7 @@ function EventList() {
                             <Link
                                 key={event._id}
                                 to={`/events/${event._id}`}
+                                state={{ event }}
                                 style={{
                                     textDecoration: "none",
                                     color: "inherit",

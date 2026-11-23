@@ -686,6 +686,7 @@ function Landing() {
                                 <div style={{ paddingTop: "16px", borderTop: "1px solid rgba(255, 255, 255, 0.05)" }}>
                                     <Link
                                         to={`/events/${evt._id}`}
+                                        state={{ event: evt }}
                                         className="btn-neon"
                                         style={{ width: "100%", justifyContent: "center", padding: "10px 16px", fontSize: "13.5px" }}
                                     >

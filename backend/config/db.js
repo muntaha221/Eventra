@@ -1,14 +1,24 @@
 const mongoose = require("mongoose");
 
-let isConnected = false;
+let cachedPromise = null;
 
 async function connectDB() {
     if (mongoose.connection.readyState >= 1) {
         return;
     }
+    if (!cachedPromise) {
+        cachedPromise = mongoose.connect(process.env.MONGODB_URI, {
+            maxPoolSize: 10,
+            minPoolSize: 2,
+            serverSelectionTimeoutMS: 5000,
+            socketTimeoutMS: 45000,
+        }).catch(err => {
+            cachedPromise = null;
+            throw err;
+        });
+    }
     try {
-        await mongoose.connect(process.env.MONGODB_URI);
-        isConnected = true;
+        await cachedPromise;
         console.log("✅ MongoDB connected successfully");
     } catch (error) {
         console.error("❌ MongoDB connection failed:", error.message);
@@ -17,3 +27,4 @@ async function connectDB() {
 }
 
 module.exports = connectDB;
+
