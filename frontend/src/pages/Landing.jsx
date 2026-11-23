@@ -203,10 +203,10 @@ function Landing() {
                         <span>Multi-Tenant Event Management & Ticketing</span>
                     </div>
 
-                    {/* Headline - High Impact 2 Words with Interactive Hover Glow & Shadow */}
+                    {/* Headline - High Impact 2 Words with Interactive Hover Glow & Shadow (No period) */}
                     <h1>
                         <span className="hero-glow-title">
-                            Own <span className="hero-glow-accent">Events.</span>
+                            Events <span className="hero-glow-accent">Simplified</span>
                         </span>
                     </h1>
 
