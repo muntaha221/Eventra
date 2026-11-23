@@ -8,6 +8,7 @@ const router = express.Router();
 // Public: get tickets for an event
 router.get("/event/:eventId", async (req, res) => {
     try {
+        res.set("Cache-Control", "public, s-maxage=10, stale-while-revalidate=30");
         const tickets = await ticketService.getTicketsByEvent(req.params.eventId);
         res.json({ success: true, data: tickets });
     } catch (error) {

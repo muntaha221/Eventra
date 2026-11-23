@@ -1,7 +1,12 @@
 import axios from "axios";
 
+// Determine API base URL — in production builds, use relative /api path
+const API_BASE_URL = import.meta.env.VITE_API_URL
+    ? import.meta.env.VITE_API_URL
+    : `${window.location.origin}/api`;
+
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "/api" : "http://localhost:3000/api"),
+    baseURL: API_BASE_URL,
     withCredentials: true // send httpOnly cookies (refreshToken)
 });
 

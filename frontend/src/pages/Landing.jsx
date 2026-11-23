@@ -46,7 +46,8 @@ function Landing() {
                 params.category = cat;
             }
             const res = await api.get("/events", { params });
-            setLiveEvents(res.data.data || []);
+            const validEvents = (res.data.data || []).filter(e => !e.isExpired);
+            setLiveEvents(validEvents);
         } catch (err) {
             setLiveEvents([]);
         } finally {
@@ -152,7 +153,7 @@ function Landing() {
         <div style={{ paddingBottom: "100px", position: "relative" }}>
 
             {/* ── Top Atmospheric Ambient Animated Hero Canvas ── */}
-            <div style={{ position: "relative", overflow: "hidden", minHeight: "860px" }}>
+            <div style={{ position: "relative", overflow: "hidden", minHeight: "auto" }}>
                 <AnimatedBackground />
 
                 {/* ── Focused Hero Section ─────────────────────────────── */}
@@ -160,7 +161,7 @@ function Landing() {
                     ref={heroRef}
                     style={{
                         position: "relative",
-                        padding: "100px 24px 60px",
+                        padding: "clamp(60px, 8vw, 100px) 16px 40px",
                         maxWidth: "980px",
                         margin: "0 auto",
                         textAlign: "center",
@@ -170,10 +171,10 @@ function Landing() {
                     <div style={{ position: "relative", zIndex: 1 }}>
                     {/* Minimal Category Tag */}
                     <p className="font-mono-tag" style={{ marginBottom: "22px" }}>
-                        Platform / Multi-Tenant Event Management
+                        Event Management · Multi-Tenant Platform
                     </p>
 
-                    {/* Headline with Clash Display + Instrument Serif Italic */}
+                    {/* Headline */}
                     <h1
                         className="font-heading-clash"
                         style={{
@@ -181,37 +182,35 @@ function Landing() {
                             fontWeight: "600",
                             letterSpacing: "-0.035em",
                             lineHeight: "1.1",
-                            marginBottom: "24px",
+                            marginBottom: "20px",
                             color: "#f8fafc"
                         }}
                     >
-                        Scale your event business <br />
+                        Run events that{" "}
                         <span
                             className="font-editorial-serif"
                             style={{
-                                fontSize: "1.14em",
+                                fontSize: "1.08em",
                                 fontWeight: "400",
-                                color: "#e2e8f0",
+                                color: "#22c55e",
                                 letterSpacing: "-0.01em"
                             }}
                         >
-                            without the operational friction.
+                            actually scale.
                         </span>
                     </h1>
 
                     <p
                         style={{
-                            fontSize: "clamp(16px, 1.8vw, 19px)",
-                            color: "#94a3b8",
-                            maxWidth: "640px",
+                            fontSize: "clamp(15px, 1.6vw, 17px)",
+                            color: "#64748b",
+                            maxWidth: "520px",
                             margin: "0 auto 38px",
-                            lineHeight: "1.65",
+                            lineHeight: "1.7",
                             fontWeight: "400"
                         }}
                     >
-                        The modern platform for event creators and organizations. Launch branded events,
-                        manage multi-tier tickets, invite team members, and accept global payments
-                        with automated Stripe billing.
+                        From ticket sales to team management — everything your organization needs, in one place.
                     </p>
 
                     {/* Interactive Hook: Live Search Bar */}
@@ -367,13 +366,14 @@ function Landing() {
                     <div
                         style={{
                             maxWidth: "920px",
+                            width: "100%",
                             margin: "44px auto 0",
                             background: "rgba(14, 14, 20, 0.38)",
                             backdropFilter: "blur(16px)",
                             WebkitBackdropFilter: "blur(16px)",
                             border: "1px solid rgba(34, 197, 94, 0.35)",
                             borderRadius: "18px",
-                            padding: "24px 28px",
+                            padding: "clamp(16px, 4vw, 28px)",
                             boxShadow: "0 25px 60px rgba(0, 0, 0, 0.5), 0 0 35px rgba(34, 197, 94, 0.12)",
                             textAlign: "left",
                             position: "relative",
@@ -618,8 +618,8 @@ function Landing() {
                     <div
                         style={{
                             display: "grid",
-                            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-                            gap: "24px"
+                            gridTemplateColumns: "repeat(auto-fit, minmax(270px, 1fr))",
+                            gap: "20px"
                         }}
                     >
                         {liveEvents.map((evt) => (
@@ -727,8 +727,8 @@ function Landing() {
                     ref={featureCardsRef}
                     style={{
                         display: "grid",
-                        gridTemplateColumns: "repeat(auto-fit, minmax(310px, 1fr))",
-                        gap: "24px"
+                        gridTemplateColumns: "repeat(auto-fit, minmax(270px, 1fr))",
+                        gap: "20px"
                     }}
                 >
                     {[

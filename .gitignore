@@ -30,3 +30,4 @@ linkedin_assets/
 generate_*.js
 
 .vercel
+.playwright-mcp/

@@ -328,3 +328,104 @@ input:focus, select:focus, textarea:focus {
     animation: pulseDot 2s ease-in-out infinite;
 }
 
+
+
+/* ── Mobile Responsive Utilities ── */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    color: #94a3b8;
+    font-size: 16px;
+}
+
+/* Navbar Desktop / Mobile Visibility */
+.nav-mobile-btn {
+    display: none !important;
+}
+
+/* Event Details Responsive Grid */
+.event-details-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+@media (max-width: 860px) {
+    .event-details-grid {
+        grid-template-columns: 1fr !important;
+        gap: 28px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-desktop-links {
+        display: none !important;
+    }
+    .nav-desktop-auth {
+        display: none !important;
+    }
+    .nav-mobile-btn {
+        display: flex !important;
+    }
+    .container {
+        padding: 24px 16px;
+    }
+    .hero-split-grid {
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
+        text-align: center;
+    }
+    .feature-card {
+        padding: 24px !important;
+    }
+    .glass-panel {
+        padding: 24px !important;
+    }
+    .ambient-aurora-orb-1,
+    .ambient-aurora-orb-2,
+    .ambient-aurora-orb-3 {
+        animation-duration: 30s !important;
+    }
+    .holographic-beam-sweep {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 20px 12px;
+    }
+    .btn-neon, .btn-secondary {
+        padding: 10px 16px !important;
+        font-size: 13px !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Smooth skeleton pulse */
+@keyframes skeletonPulse {
+  0% { opacity: 0.35; }
+  50% { opacity: 0.75; }
+  100% { opacity: 0.35; }
+}
+
+.skeleton-pulse {
+  animation: skeletonPulse 1.4s ease-in-out infinite;
+}

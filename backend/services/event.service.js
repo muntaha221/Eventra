@@ -73,6 +73,15 @@ async function getAllEvents(queryParams, organizationId = null) {
         if (queryParams.dateTo) filter.date.$lte = new Date(queryParams.dateTo);
     }
 
+    // Automatically filter out expired events for public browsing unless explicitly requested
+    if (!organizationId && queryParams.includeExpired !== "true") {
+        if (!filter.date) {
+            filter.date = { $gte: new Date() };
+        } else if (!filter.date.$gte) {
+            filter.date.$gte = new Date();
+        }
+    }
+
     const sort = queryParams.sort ? { [queryParams.sort]: 1 } : { date: 1 };
     const skip = (page - 1) * limit;
 

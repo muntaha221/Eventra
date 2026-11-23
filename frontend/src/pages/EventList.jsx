@@ -12,11 +12,20 @@ function EventList() {
 
     const [events, setEvents] = useState([]);
     const [search, setSearch] = useState(urlSearch);
+    const [debouncedSearch, setDebouncedSearch] = useState(urlSearch);
     const [category, setCategory] = useState(urlCategory.toLowerCase() === "all" ? "" : urlCategory);
     const [page, setPage] = useState(1);
     const [pagination, setPagination] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+
+    // Debounce search input to avoid spamming the backend
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedSearch(search);
+        }, 300);
+        return () => clearTimeout(handler);
+    }, [search]);
 
     // Keep state in sync with URL searchParams
     useEffect(() => {
@@ -24,6 +33,7 @@ function EventList() {
         const q = searchParams.get("search") || "";
         setCategory(cat.toLowerCase() === "all" ? "" : cat);
         setSearch(q);
+        setDebouncedSearch(q);
         setPage(1);
     }, [searchParams]);
 
@@ -32,13 +42,14 @@ function EventList() {
         setError("");
         try {
             const queryParams = { page, limit: 6 };
-            if (search.trim()) queryParams.search = search.trim();
+            if (debouncedSearch.trim()) queryParams.search = debouncedSearch.trim();
             if (category && category.toLowerCase() !== "all") queryParams.category = category;
 
             const res = await api.get("/events", {
                 params: queryParams
             });
-            setEvents(res.data.data || []);
+            const activeEvents = (res.data.data || []).filter(e => !e.isExpired);
+            setEvents(activeEvents);
             setPagination(res.data.pagination);
         } catch (err) {
             setError(err.response?.data?.message || "Failed to load events");
@@ -47,7 +58,7 @@ function EventList() {
         }
     }
 
-    useEffect(() => { load(); }, [page, search, category]);
+    useEffect(() => { load(); }, [page, debouncedSearch, category]);
 
     const handleSearchChange = (val) => {
         setSearch(val);
@@ -136,8 +147,8 @@ function EventList() {
             {loading && (
                 <div style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-                    gap: "24px"
+                    gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+                    gap: "20px"
                 }}>
                     {[1, 2, 3, 4, 5, 6].map(i => (
                         <div key={i} style={{
@@ -185,8 +196,8 @@ function EventList() {
                 <>
                     <div style={{
                         display: "grid",
-                        gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-                        gap: "24px"
+                        gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+                        gap: "20px"
                     }}>
                         {events.map((event, idx) => (
                             <Link

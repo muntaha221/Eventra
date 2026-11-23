@@ -31,9 +31,11 @@ import {
 } from "lucide-react";
 import gsap from "gsap";
 import TicketScanner from "../components/TicketScanner";
+import { useToast } from "../components/Toast";
 
 function AdminDashboard() {
     const navigate = useNavigate();
+    const toast = useToast();
     const [searchParams, setSearchParams] = useSearchParams();
     const activeTab = searchParams.get("tab") || "dashboard";
 
@@ -123,10 +125,11 @@ function AdminDashboard() {
         if (!window.confirm("Are you sure you want to permanently delete this event?")) return;
 
         try {
-            await api.delete(`/events/${eventId}`);
+            const res = await api.delete(`/events/${eventId}`);
+            toast.success(res.data.message || "Event deleted successfully.");
             loadDashboardData();
         } catch (err) {
-            alert(err.response?.data?.message || "Failed to delete event.");
+            toast.error(err.response?.data?.message || "Failed to delete event.");
         }
     }
 

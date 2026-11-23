@@ -13,6 +13,8 @@ const adminRoutes = require("./routes/admin.routes");
 const billingRoutes = require("./routes/billing.routes");
 const orgRoutes = require("./routes/org.routes");
 const feedbackRoutes = require("./routes/feedback.routes");
+const cronRoutes = require("./routes/cron.routes");
+const graphqlRoutes = require("./routes/graphql.routes");
 const errorMiddleware = require("./middleware/error.middleware");
 
 const app = express();
@@ -20,7 +22,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(
     cors({
-        origin: "http://localhost:5173",
+        origin: true,
         credentials: true
     })
 );
@@ -55,6 +57,8 @@ const mountRoutes = (prefix) => {
     app.use(`${prefix}/billing`, billingRoutes);
     app.use(`${prefix}/orgs`, orgRoutes);
     app.use(`${prefix}/feedback`, feedbackRoutes);
+    app.use(`${prefix}/cron`, cronRoutes);
+    app.use(`${prefix}/graphql`, graphqlRoutes);
 };
 
 mountRoutes("/api");

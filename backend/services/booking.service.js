@@ -373,6 +373,11 @@ async function getUserBookings(userId, queryParams) {
     };
 }
 
+async function deleteBookingsByEvent(eventId) {
+    const result = await Booking.deleteMany({ event: eventId });
+    return result.deletedCount;
+}
+
 module.exports = {
     createBooking,
     verifyTicket,
@@ -380,5 +385,6 @@ module.exports = {
     getOrgBookings,
     cancelOrgBooking,
     cancelBooking,
-    getUserBookings
+    getUserBookings,
+    deleteBookingsByEvent
 };

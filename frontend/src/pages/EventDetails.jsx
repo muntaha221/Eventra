@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import api from "../api/axios";
+import { useToast } from "../components/Toast";
 import {
     Calendar,
     MapPin,
@@ -17,6 +18,7 @@ import {
 function EventDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const toast = useToast();
 
     const [event, setEvent] = useState(null);
     const [tickets, setTickets] = useState([]);
@@ -55,6 +57,7 @@ function EventDetails() {
                 setLoading(false);
             }
         }
+        window.scrollTo(0, 0);
         load();
     }, [id]);
 
@@ -86,8 +89,12 @@ function EventDetails() {
             });
 
             setConfirmedBooking(res.data.data);
+            toast.success("Ticket reservation confirmed! A confirmation email has been dispatched.");
+            window.scrollTo({ top: 0, behavior: "smooth" });
         } catch (err) {
-            setBookingError(err.response?.data?.message || "Booking reservation failed. Please try again.");
+            const msg = err.response?.data?.message || "Booking reservation failed. Please try again.";
+            setBookingError(msg);
+            toast.error(msg);
         } finally {
             setBooking(false);
         }
@@ -95,8 +102,18 @@ function EventDetails() {
 
     if (loading) {
         return (
-            <div style={{ maxWidth: "800px", margin: "80px auto", textAlign: "center", color: "#94a3b8" }}>
-                <p>Loading event information...</p>
+            <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "48px 24px 100px" }}>
+                <div style={{ height: "24px", width: "120px", background: "rgba(255,255,255,0.06)", borderRadius: "6px", marginBottom: "28px" }} className="skeleton-pulse" />
+                <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: "36px" }}>
+                    <div>
+                        <div style={{ height: "40px", width: "70%", background: "rgba(255,255,255,0.08)", borderRadius: "8px", marginBottom: "20px" }} className="skeleton-pulse" />
+                        <div style={{ height: "180px", background: "rgba(255,255,255,0.04)", borderRadius: "14px", marginBottom: "24px" }} className="skeleton-pulse" />
+                        <div style={{ height: "120px", background: "rgba(255,255,255,0.04)", borderRadius: "14px" }} className="skeleton-pulse" />
+                    </div>
+                    <div>
+                        <div style={{ height: "360px", background: "rgba(255,255,255,0.05)", borderRadius: "14px" }} className="skeleton-pulse" />
+                    </div>
+                </div>
             </div>
         );
     }
@@ -248,7 +265,7 @@ function EventDetails() {
                 </div>
             ) : (
                 /* Event View & Booking Form */
-                <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "40px", alignItems: "start" }}>
+                <div className="event-details-grid">
 
                     {/* Left: Event Details */}
                     <div>

@@ -1,16 +1,18 @@
+import React, { Suspense } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ScrollToTop from "./components/ScrollToTop";
 
-// Public SaaS pages
-import Landing from "./pages/Landing";
-import Pricing from "./pages/Pricing";
-import Contact from "./pages/Contact";
-import EventList from "./pages/EventList";
-import EventDetails from "./pages/EventDetails";
+// Lazy‑load heavy pages for better performance
+const Landing = React.lazy(() => import('./pages/Landing'));
+const Pricing = React.lazy(() => import('./pages/Pricing'));
+const Contact = React.lazy(() => import('./pages/Contact'));
+const EventList = React.lazy(() => import('./pages/EventList'));
+const EventDetails = React.lazy(() => import('./pages/EventDetails'));
 
-// Auth & onboarding
+// Auth & onboarding (lightweight)
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import VerifyEmail from "./pages/VerifyEmail";
@@ -18,14 +20,15 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import JoinTeam from "./pages/JoinTeam";
 
-// Attendee pages
+// Attendee pages (lightweight)
 import BookingList from "./pages/BookingList";
 import Profile from "./pages/Profile";
 
-// Org SaaS hub
-import AdminDashboard from "./pages/AdminDashboard";
-import AdminEventForm from "./pages/AdminEventForm";
-import AdminEventTickets from "./pages/AdminEventTickets";
+// Org SaaS hub – lazy load admin UI
+const AdminDashboard = React.lazy(() => import('./pages/AdminDashboard'));
+const AdminEventForm = React.lazy(() => import('./pages/AdminEventForm'));
+const AdminEventTickets = React.lazy(() => import('./pages/AdminEventTickets'));
+
 
 // Routes that render the footer — keeps the app/dashboard shell clean
 const PUBLIC_ROUTES_WITH_FOOTER = [
@@ -48,9 +51,11 @@ function AppShell() {
 
     return (
         <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+            <ScrollToTop />
             {showNavbar && <Navbar />}
 
             <main style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+                <Suspense fallback={<div className="loader">Loading…</div>}>
                 <Routes>
                     {/* ── Public marketing & browse ── */}
                     <Route path="/" element={<Landing />} />
@@ -109,6 +114,7 @@ function AppShell() {
                     {/* Fallback */}
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
+                </Suspense>
             </main>
 
             {showFooter && <Footer />}

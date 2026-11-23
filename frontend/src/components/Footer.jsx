@@ -190,6 +190,7 @@ function FeedbackModal({ onClose }) {
 // ── Footer ──────────────────────────────────────────────────────────
 function Footer() {
     const [modalOpen, setModalOpen] = useState(false);
+    const [showFullSpecs, setShowFullSpecs] = useState(false);
     const year = new Date().getFullYear();
 
     const colHeadStyle = {
@@ -241,8 +242,90 @@ function Footer() {
             >
                 <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
 
+                    {/* Platform Architecture & Component Overview (Expandable) */}
+                    <div
+                        style={{
+                            background: "rgba(18, 18, 24, 0.45)",
+                            border: "1px solid rgba(255, 255, 255, 0.08)",
+                            borderRadius: "16px",
+                            padding: "24px 28px",
+                            marginBottom: "48px",
+                            backdropFilter: "blur(12px)"
+                        }}
+                    >
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px", marginBottom: showFullSpecs ? "20px" : "0" }}>
+                            <div>
+                                <span className="font-mono-tag" style={{ color: "#22c55e", fontSize: "11px", marginBottom: "4px", display: "inline-block" }}>
+                                    PLATFORM ARCHITECTURE & CAPABILITIES
+                                </span>
+                                <h3 style={{ fontSize: "18px", fontWeight: "700", color: "#f8fafc", margin: "4px 0" }}>
+                                    Complete Multi-Tenant Event Infrastructure
+                                </h3>
+                                <p style={{ fontSize: "13.5px", color: "#94a3b8", margin: 0, maxWidth: "680px", lineHeight: "1.5" }}>
+                                    Engineered with enterprise-grade tenant isolation, real-time ticket inventory locking, automated Stripe webhooks, and instant QR check-in scanning.
+                                </p>
+                            </div>
+                            <button
+                                onClick={() => setShowFullSpecs(!showFullSpecs)}
+                                className="btn-secondary"
+                                style={{ padding: "8px 16px", fontSize: "13px", display: "inline-flex", alignItems: "center", gap: "6px" }}
+                            >
+                                {showFullSpecs ? "Show Less" : "Read More & Specs"}
+                                <ChevronRight size={14} style={{ transform: showFullSpecs ? "rotate(90deg)" : "none", transition: "transform 0.2s ease" }} />
+                            </button>
+                        </div>
+
+                        {showFullSpecs && (
+                            <div
+                                style={{
+                                    borderTop: "1px solid rgba(255, 255, 255, 0.06)",
+                                    paddingTop: "20px",
+                                    display: "grid",
+                                    gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+                                    gap: "20px",
+                                    marginTop: "16px"
+                                }}
+                            >
+                                <div>
+                                    <h4 style={{ fontSize: "13.5px", fontWeight: "700", color: "#22c55e", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                                        Core Modules
+                                    </h4>
+                                    <ul style={{ margin: 0, paddingLeft: "18px", color: "#94a3b8", fontSize: "13px", lineHeight: "1.7" }}>
+                                        <li><strong style={{ color: "#e2e8f0" }}>Organization Hub:</strong> Custom slugs, branding, domain isolation.</li>
+                                        <li><strong style={{ color: "#e2e8f0" }}>Event Lifecycle:</strong> Multi-date, venue mappings, status controls.</li>
+                                        <li><strong style={{ color: "#e2e8f0" }}>Tiered Ticketing:</strong> Dynamic pricing, early-bird & VIP tiers.</li>
+                                        <li><strong style={{ color: "#e2e8f0" }}>Booking Flow:</strong> Atomic reservations preventing overselling.</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 style={{ fontSize: "13.5px", fontWeight: "700", color: "#60a5fa", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                                        Security & Verification
+                                    </h4>
+                                    <ul style={{ margin: 0, paddingLeft: "18px", color: "#94a3b8", fontSize: "13px", lineHeight: "1.7" }}>
+                                        <li><strong style={{ color: "#e2e8f0" }}>QR Check-in Engine:</strong> One-tap cryptographic scanning.</li>
+                                        <li><strong style={{ color: "#e2e8f0" }}>RBAC Permissions:</strong> Owner, Admin, and Scanner roles.</li>
+                                        <li><strong style={{ color: "#e2e8f0" }}>Data Privacy:</strong> Strict per-tenant database queries.</li>
+                                        <li><strong style={{ color: "#e2e8f0" }}>Secure Sessions:</strong> JWT tokens & encrypted credentials.</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 style={{ fontSize: "13.5px", fontWeight: "700", color: "#c084fc", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                                        Integrations & APIs
+                                    </h4>
+                                    <ul style={{ margin: 0, paddingLeft: "18px", color: "#94a3b8", fontSize: "13px", lineHeight: "1.7" }}>
+                                        <li><strong style={{ color: "#e2e8f0" }}>Stripe Checkout:</strong> Automatic settlements & webhook sync.</li>
+                                        <li><strong style={{ color: "#e2e8f0" }}>Automated Jobs:</strong> Nightly expired event auto-cleanup.</li>
+                                        <li><strong style={{ color: "#e2e8f0" }}>GraphQL Endpoint:</strong> High-speed queries for modern clients.</li>
+                                        <li><strong style={{ color: "#e2e8f0" }}>Cloudinary Storage:</strong> Optimized media and banner assets.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
                     {/* Top grid */}
                     <div
+                        className="footer-grid"
                         style={{
                             display: "grid",
                             gridTemplateColumns: "2fr 1fr 1fr 1fr",

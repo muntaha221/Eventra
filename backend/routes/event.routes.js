@@ -10,6 +10,7 @@ const router = express.Router();
 // Public: browse all events across all organizations
 router.get("/", async (req, res) => {
     try {
+        res.set("Cache-Control", "public, s-maxage=10, stale-while-revalidate=30");
         const result = await eventService.getAllEvents(req.query);
         res.json({
             success: true,
@@ -44,6 +45,7 @@ router.get(
 // Public: single event details
 router.get("/:id", async (req, res) => {
     try {
+        res.set("Cache-Control", "public, s-maxage=10, stale-while-revalidate=30");
         const event = await eventService.getEventById(req.params.id);
         res.json({ success: true, data: event });
     } catch (error) {
