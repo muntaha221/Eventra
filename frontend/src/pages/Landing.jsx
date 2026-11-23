@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
     Search,
     Calendar,
@@ -21,8 +18,6 @@ import {
 } from "lucide-react";
 import api from "../api/axios";
 import AnimatedBackground from "../components/AnimatedBackground";
-
-gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const QUICK_CATEGORIES = ["All", "Tech", "Music", "Sports", "Art", "Other"];
 
@@ -73,74 +68,6 @@ function Landing() {
             })
             .catch(() => {});
     }, []);
-
-    // GSAP animations on hero mount
-    useGSAP(() => {
-        gsap.fromTo(
-            heroRef.current,
-            { opacity: 0, y: 26 },
-            { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
-        );
-    }, { scope: heroRef });
-
-    // Features scroll trigger
-    useGSAP(() => {
-        if (featureTitleRef.current) {
-            gsap.fromTo(
-                featureTitleRef.current,
-                { opacity: 0, y: 24 },
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.65,
-                    ease: "power2.out",
-                    scrollTrigger: {
-                        trigger: featureTitleRef.current,
-                        start: "top 85%",
-                    }
-                }
-            );
-        }
-
-        const cards = featureCardsRef.current?.querySelectorAll(".feature-card");
-        if (cards?.length) {
-            gsap.fromTo(
-                cards,
-                { opacity: 0, y: 40 },
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.6,
-                    ease: "power2.out",
-                    stagger: 0.12,
-                    scrollTrigger: {
-                        trigger: featureCardsRef.current,
-                        start: "top 82%",
-                    }
-                }
-            );
-        }
-    });
-
-    // Pricing scroll trigger
-    useGSAP(() => {
-        if (pricingRef.current) {
-            gsap.fromTo(
-                pricingRef.current,
-                { opacity: 0, y: 36 },
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.7,
-                    ease: "power2.out",
-                    scrollTrigger: {
-                        trigger: pricingRef.current,
-                        start: "top 85%",
-                    }
-                }
-            );
-        }
-    });
 
     function handleSearchSubmit(e) {
         e.preventDefault();
@@ -203,10 +130,10 @@ function Landing() {
                         <span>Multi-Tenant Event Management & Ticketing</span>
                     </div>
 
-                    {/* Headline - High Impact 2 Words with Interactive Hover Glow & Shadow (No period) */}
+                    {/* Headline - High Impact with Interactive Hover Glow & Shadow (No period) */}
                     <h1>
                         <span className="hero-glow-title">
-                            Events <span className="hero-glow-accent">Simplified</span>
+                            Scale your <span className="hero-glow-accent">event empire</span>
                         </span>
                     </h1>
 
@@ -220,7 +147,7 @@ function Landing() {
                             fontWeight: "400"
                         }}
                     >
-                        From ticket sales to team management — everything your organization needs, in one place.
+                        From ticket sales to team management → everything your organization needs, in one place
                     </p>
 
                     {/* Interactive Hook: Live Search Bar */}
@@ -405,7 +332,7 @@ function Landing() {
                                     Live Platform Scale
                                 </span>
                             </div>
-                            <span style={{ fontSize: "12px", color: "#64748b" }}>
+                            <span style={{ fontSize: "12px", color: "#94a3b8" }}>
                                 Production Network Metrics
                             </span>
                         </div>
@@ -425,7 +352,7 @@ function Landing() {
                                 <div style={{ fontSize: "28px", fontWeight: "800", color: "#f8fafc", lineHeight: "1.1" }}>
                                     {platformStats.totalOrganizations}
                                 </div>
-                                <div style={{ fontSize: "11.5px", color: "#64748b", marginTop: "4px" }}>
+                                <div style={{ fontSize: "11.5px", color: "#94a3b8", marginTop: "4px" }}>
                                     Active organizers registered
                                 </div>
                             </div>
@@ -438,7 +365,7 @@ function Landing() {
                                 <div style={{ fontSize: "28px", fontWeight: "800", color: "#f8fafc", lineHeight: "1.1" }}>
                                     {platformStats.totalEvents}
                                 </div>
-                                <div style={{ fontSize: "11.5px", color: "#64748b", marginTop: "4px" }}>
+                                <div style={{ fontSize: "11.5px", color: "#94a3b8", marginTop: "4px" }}>
                                     Live sessions scheduled
                                 </div>
                             </div>
@@ -451,7 +378,7 @@ function Landing() {
                                 <div style={{ fontSize: "28px", fontWeight: "800", color: "#f8fafc", lineHeight: "1.1" }}>
                                     {platformStats.totalAttendees}
                                 </div>
-                                <div style={{ fontSize: "11.5px", color: "#64748b", marginTop: "4px" }}>
+                                <div style={{ fontSize: "11.5px", color: "#94a3b8", marginTop: "4px" }}>
                                     Attendee tickets reserved
                                 </div>
                             </div>
@@ -464,7 +391,7 @@ function Landing() {
                                 <div style={{ fontSize: "28px", fontWeight: "800", color: "#f8fafc", lineHeight: "1.1" }}>
                                     {platformStats.totalMembers}
                                 </div>
-                                <div style={{ fontSize: "11.5px", color: "#64748b", marginTop: "4px" }}>
+                                <div style={{ fontSize: "11.5px", color: "#94a3b8", marginTop: "4px" }}>
                                     Staff & gate coordinators
                                 </div>
                             </div>
@@ -579,7 +506,7 @@ function Landing() {
                                         <span className="badge-neon" style={{ fontSize: "11px", padding: "3px 10px" }}>
                                             {evt.category || "General"}
                                         </span>
-                                        <div style={{ display: "flex", alignItems: "center", gap: "6px", color: "#64748b", fontSize: "12.5px" }}>
+                                        <div style={{ display: "flex", alignItems: "center", gap: "6px", color: "#94a3b8", fontSize: "12.5px" }}>
                                             <Calendar size={13} color="#22c55e" />
                                             <span>{formatDate(evt.date)}</span>
                                         </div>
@@ -615,7 +542,7 @@ function Landing() {
                                     )}
 
                                     {evt.location && (
-                                        <div style={{ display: "flex", alignItems: "center", gap: "6px", color: "#64748b", fontSize: "13px", marginBottom: "20px" }}>
+                                        <div style={{ display: "flex", alignItems: "center", gap: "6px", color: "#94a3b8", fontSize: "13px", marginBottom: "20px" }}>
                                             <MapPin size={13} />
                                             <span>{evt.location}</span>
                                         </div>

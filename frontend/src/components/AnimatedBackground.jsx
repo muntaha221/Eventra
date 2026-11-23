@@ -28,10 +28,11 @@ export default function AnimatedBackground() {
         let mouseY = -1000;
         let isVisible = true;
 
-        // Particle configuration
-        const PARTICLE_COUNT = 52;
-        const CONNECT_DISTANCE = 135;
-        const MOUSE_RADIUS = 160;
+        // Responsive lightweight particle count (skips particle calculations on mobile to maximize FPS)
+        const isMobile = (window.innerWidth || 1024) < 768;
+        const PARTICLE_COUNT = isMobile ? 0 : 22;
+        const CONNECT_DISTANCE = 120;
+        const MOUSE_RADIUS = 140;
 
         let particles = [];
 

@@ -181,10 +181,10 @@ input:focus, select:focus, textarea:focus {
 .hero-glow-title {
     display: inline-block;
     cursor: default;
-    font-size: clamp(48px, 8.5vw, 92px);
+    font-size: clamp(38px, 6.2vw, 78px);
     font-weight: 800;
     letter-spacing: -0.04em;
-    line-height: 1.05;
+    line-height: 1.08;
     margin-bottom: 20px;
     color: #f8fafc;
     transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
