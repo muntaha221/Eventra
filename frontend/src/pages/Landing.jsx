@@ -112,6 +112,7 @@ function Landing() {
                     <div style={{ position: "relative", zIndex: 1 }}>
                     {/* Professional Pill Badge */}
                     <div
+                        className="animate-fade-in-up"
                         style={{
                             display: "inline-flex",
                             alignItems: "center",
@@ -126,28 +127,30 @@ function Landing() {
                             color: "#f8fafc"
                         }}
                     >
-                        <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#22c55e" }} />
+                        <span className="live-dot-pulse" style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#22c55e" }} />
                         <span>Multi-Tenant Event Management & Ticketing</span>
                     </div>
 
-                    {/* Headline - High Impact with Interactive Hover Glow & Shadow (No period) */}
+                    {/* Headline - Title Case with Clean Modern Typography (No period) */}
                     <h1>
                         <span className="hero-glow-title">
-                            Scale your <span className="hero-glow-accent">event empire</span>
+                            Scale Your <span className="hero-glow-accent">Event Empire</span> with Eventra
                         </span>
                     </h1>
 
                     <p
+                        className="animate-fade-in-up"
                         style={{
-                            fontSize: "clamp(15px, 1.6vw, 17px)",
+                            fontSize: "clamp(15px, 1.6vw, 17.5px)",
                             color: "#94a3b8",
-                            maxWidth: "520px",
+                            maxWidth: "620px",
                             margin: "0 auto 38px",
                             lineHeight: "1.7",
-                            fontWeight: "400"
+                            fontWeight: "400",
+                            animationDelay: "0.1s"
                         }}
                     >
-                        From ticket sales to team management → everything your organization needs, in one place
+                        From Ticket Sales to Team Management → Everything Your Organization Needs, in One Place
                     </p>
 
                     {/* Interactive Hook: Live Search Bar */}
